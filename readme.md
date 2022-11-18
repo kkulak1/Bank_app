@@ -4,7 +4,8 @@ Skład zespołu:
     Marcin Górski
 
 Technologia:
-    Java + spring boot
+    Java + springboot
+    aplikacja webowa
 
 Temat:
     aplikacja bankowa
