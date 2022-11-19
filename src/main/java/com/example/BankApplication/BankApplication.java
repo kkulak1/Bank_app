@@ -16,6 +16,6 @@ public class BankApplication {
 		@GetMapping
 
 		public String hello(){
-			return "Siema234";
+			return "Siema, pozdro";
 		}
 }
