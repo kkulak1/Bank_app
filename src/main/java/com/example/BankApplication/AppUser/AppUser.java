@@ -70,9 +70,7 @@ public class AppUser implements UserDetails {
     }
 
     @Override
-    public String getUsername() {
-        return username;
-    }
+    public String getUsername() { return username; }
 
     @Override
     public boolean isAccountNonExpired() {

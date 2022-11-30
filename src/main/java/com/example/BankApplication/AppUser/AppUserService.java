@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-// this is how we find students once we try to log in
+// this is how we find users once we try to log in
 @Service
 @AllArgsConstructor
 public class AppUserService implements UserDetailsService {
