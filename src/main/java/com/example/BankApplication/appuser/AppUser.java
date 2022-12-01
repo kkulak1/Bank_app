@@ -1,10 +1,10 @@
-package com.example.BankApplication.AppUser;
+package com.example.BankApplication.appuser;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
+import net.bytebuddy.build.Plugin;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,15 +22,16 @@ public class AppUser implements UserDetails {
 
 
     @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
+            name = "user_sequence",
+            sequenceName = "user_sequence",
             allocationSize = 1
     )
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
+            generator = "user_sequence"
     )
+
     private Long id;
     private String name;
     private String username;
@@ -41,14 +42,7 @@ public class AppUser implements UserDetails {
     private Boolean locked;
     private Boolean enabled;
 
-    public AppUser(String name,
-                   String username,
-                   String email,
-                   String password,
-                   AppUserRole appUserRole,
-                   Boolean locked,
-                   Boolean enabled) {
-
+    public AppUser(String name, String username, String email, String password, AppUserRole appUserRole, Boolean locked, Boolean enabled) {
         this.name = name;
         this.username = username;
         this.email = email;
@@ -70,7 +64,9 @@ public class AppUser implements UserDetails {
     }
 
     @Override
-    public String getUsername() { return username; }
+    public String getUsername() {
+        return username;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -92,43 +88,3 @@ public class AppUser implements UserDetails {
         return enabled;
     }
 }
-
-//public class AppUser implements UserDetails{
-//
-////    private long id;
-////    private String name;
-////
-////    public AppUser() {
-////    }
-////
-////    public AppUser(long id, String name) {
-////        this.id = id;
-////        this.name = name;
-////    }
-////
-////    public long getId() {
-////        return id;
-////    }
-////
-////    public void setId(long id) {
-////        this.id = id;
-////    }
-////
-////    public String getName() {
-////        return name;
-////    }
-////
-////    public void setName(String name) {
-////        this.name = name;
-////    }
-////
-////    @Override
-////    public String toString() {
-////        return "User{" +
-////                "id=" + id +
-////                ", name='" + name + '\'' +
-////                '}';
-////    }
-//}
-
-

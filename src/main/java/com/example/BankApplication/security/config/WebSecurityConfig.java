@@ -1,6 +1,6 @@
 package com.example.BankApplication.security.config;
 
-import com.example.BankApplication.AppUser.AppUserService;
+import com.example.BankApplication.appuser.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

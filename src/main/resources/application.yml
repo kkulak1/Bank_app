@@ -1,17 +1,25 @@
-#error:
-#  include-message: always
-#  include-binding-errors: always
-#
-#spring:
-#  datasource:
-#    password:
-#    url: jdbc:postgresql://localhost:5432/registration
-#    username:
-#  jpa:
-#    hibernate:
-#      ddl-auto: create-drop
-#    properties:
-#      hibernate:
-#        dialect: org.hibernate.dialect.PostgreSQLDialect
-#        format_sql: true
-#    show-sql: true
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  datasource:
+    password: kt87ad
+    url: jdbc:mysql://ora4.ii.pw.edu.pl
+#    url: ora4.ii.pw.edu.pl
+    username: z28
+    driver-class-name: com.mysql.jdbc.Driver
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+#      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+    show-sql: true
+

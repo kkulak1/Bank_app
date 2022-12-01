@@ -5,11 +5,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+//co chcemy przechwycic gdy wyslemy zapytanie-request
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-//    co chcemy przechwycic gdy wyslemy zapytanie-request
 public class RegistrationRequest {
     private final String firstName;
     private final String lastName;
