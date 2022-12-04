@@ -1,5 +1,7 @@
 package com.example.BankApplication.appuser;
 
+import com.example.BankApplication.registration.token.ConfirmationToken;
+import com.example.BankApplication.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Service
 @AllArgsConstructor
 //@RequiredArgsConstructor
@@ -16,6 +21,7 @@ public class AppUserService implements UserDetailsService {
 
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ConfirmationTokenService confirmationTokenService;
     private final static String USER_NOT_FOUND_MSG = "User with email %s not found!";
 
     @Override
@@ -37,8 +43,20 @@ public class AppUserService implements UserDetailsService {
 
         appUserRepository.save(appUser);
 
-        //TODO: send confirmation token
+        String token = UUID.randomUUID().toString();
 
-        return "works";
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                appUser
+        );
+
+        confirmationTokenService.saveConfirmationToken(
+                confirmationToken);
+
+        // TODO: send email
+
+        return token;
     }
 }

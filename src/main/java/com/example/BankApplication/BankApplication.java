@@ -11,7 +11,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 //@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 //@ComponentScan({"com.example.BankApplication.appuser", "com.example.BankApplication.registration"})
-@EnableJpaRepositories("com.example.BankApplication.appuser")
+//@EnableJpaRepositories("com.example.BankApplication.appuser")
+@EnableJpaRepositories(basePackages = "com.example.BankApplication")
 public class BankApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BankApplication.class, args);
