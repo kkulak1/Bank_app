@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -37,6 +38,18 @@ public class AppUserService implements UserDetailsService {
                 .orElseThrow(() ->
                         new UsernameNotFoundException(
                                 String.format(USER_NOT_FOUND_MSG, email)));
+    }
+
+    public List<AppUser> findAllAppUsers() {
+        return appUserRepository.findAll();
+    }
+
+    public AppUser updateAppUser(AppUser appUser) {
+        return appUserRepository.save(appUser);
+    }
+
+    public void deleteAppUser(Long id) {
+        appUserRepository.deleteAppUserById(id);
     }
 
     public String signUpUser(AppUser appUser) {

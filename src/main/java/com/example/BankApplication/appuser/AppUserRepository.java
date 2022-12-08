@@ -14,6 +14,8 @@ import java.util.Optional;
 public interface AppUserRepository extends JpaRepository<AppUser, Long> {
     Optional<AppUser> findByEmail(String email);
 
+    void deleteAppUserById(Long id);
+
     @Transactional
     @Modifying
     @Query("UPDATE AppUser a " +
