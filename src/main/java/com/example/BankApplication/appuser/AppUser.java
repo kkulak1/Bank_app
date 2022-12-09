@@ -38,6 +38,7 @@ public class AppUser implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
+    private Float balance= Float.valueOf(0);
     private Boolean locked = false;
     private Boolean enabled=false;
 
@@ -72,6 +73,8 @@ public class AppUser implements UserDetails {
     public String getLastName() {
         return lastName;
     }
+
+    public Float getBalance() {return balance;}
 
     @Override
     public boolean isAccountNonExpired() {
