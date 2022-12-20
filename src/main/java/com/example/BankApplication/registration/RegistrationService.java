@@ -1,5 +1,7 @@
 package com.example.BankApplication.registration;
 
+import com.example.BankApplication.account.Account;
+import com.example.BankApplication.account.AccountService;
 import com.example.BankApplication.appuser.AppUser;
 import com.example.BankApplication.appuser.AppUserRole;
 import com.example.BankApplication.appuser.AppUserService;
@@ -20,6 +22,7 @@ public class RegistrationService {
     private final EmailValidator emailValidator;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
+    private final AccountService accountService;
 
     public String register(RegistrationRequest request) {
         boolean isValidEmail = emailValidator.
@@ -29,15 +32,26 @@ public class RegistrationService {
             throw new IllegalStateException("email not valid");
         }
 
-        String token = appUserService.signUpUser(
-                new AppUser(
-                        request.getFirstName(),
-                        request.getLastName(),
-                        request.getEmail(),
-                        request.getPassword(),
-                        AppUserRole.USER
-                )
+        AppUser newAppUser = new AppUser(
+                request.getFirstName(),
+                request.getLastName(),
+                request.getEmail(),
+                request.getPassword(),
+                AppUserRole.USER
         );
+
+        String token = appUserService.signUpUser(
+                newAppUser
+        );
+
+        float balance = 0.0F;
+
+        Account newAccount = new Account(
+                newAppUser,
+                balance
+        );
+
+        accountService.addAccount(newAccount);
 
         String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
         emailSender.send(

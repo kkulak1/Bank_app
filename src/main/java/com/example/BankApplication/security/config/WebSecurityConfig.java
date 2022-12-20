@@ -21,31 +21,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .csrf().disable()   //to send post request without being rejected
-//                .authorizeRequests()
-//                    .antMatchers("/api/v*/registration/**")//allow everything after registration
-//                    .permitAll()
-//                .anyRequest()
-//                .authenticated().and()
-//                .formLogin();
-        http.csrf()
-                .disable()
+        http
+                .csrf().disable()   //to send post request without being rejected
                 .authorizeRequests()
-                .antMatchers("/admin/**")
-                .hasRole("ADMIN")
-                .antMatchers("/anonymous*")
-                .anonymous()
-                .antMatchers("/login*")
-                .permitAll()
+                    .antMatchers("/api/v*/registration/**")//allow everything after registration
+                    .permitAll()
                 .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login-or-register")
-                .loginProcessingUrl("/perform_login")
-                .defaultSuccessUrl("/homepage.html", true)
-                .failureUrl("/login.html?error=true");
+                .authenticated().and()
+                .formLogin();
+//        http.csrf()
+//                .disable()
+//                .authorizeRequests()
+//                .antMatchers("/admin/**")
+//                .hasRole("ADMIN")
+//                .antMatchers("/anonymous*")
+//                .anonymous()
+//                .antMatchers("/login*")
+//                .permitAll()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .formLogin()
+//                .loginPage("/login-or-register")
+//                .loginProcessingUrl("/perform_login")
+//                .defaultSuccessUrl("/homepage.html", true)
+//                .failureUrl("/login.html?error=true");
 //                .failureHandler(authenticationFailureHandler())
 //                .and()
 //                .logout()

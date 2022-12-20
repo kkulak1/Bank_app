@@ -1,5 +1,6 @@
 package com.example.BankApplication.appuser;
 
+import com.example.BankApplication.account.AccountService;
 import com.example.BankApplication.registration.token.ConfirmationToken;
 import com.example.BankApplication.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
