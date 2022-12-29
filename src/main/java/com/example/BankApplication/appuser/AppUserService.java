@@ -3,6 +3,8 @@ package com.example.BankApplication.appuser;
 import com.example.BankApplication.account.AccountService;
 import com.example.BankApplication.registration.token.ConfirmationToken;
 import com.example.BankApplication.registration.token.ConfirmationTokenService;
+import com.example.BankApplication.transfer.TransferRequest;
+import com.example.BankApplication.transfer.TransferService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ public class AppUserService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
+    private final TransferService transferService;
     private final static String USER_NOT_FOUND_MSG = "User with email %s not found!";
 
     @Override
@@ -89,5 +92,12 @@ public class AppUserService implements UserDetailsService {
 
     public int enableAppUser(String email) {
         return appUserRepository.enableAppUser(email);
+    }
+
+    public String transfer(TransferRequest request){
+
+        transferService.transfer(request);
+
+        return "true";
     }
 }

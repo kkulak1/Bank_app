@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface TransferRepository extends JpaRepository<Transfer, Long> {
     Optional<Transfer> findById(Long id);
 
-    Optional<Transfer> findByTransfer(String transfer);
+//    Optional<Transfer> findByTransfer(String transfer);
 }

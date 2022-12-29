@@ -37,15 +37,19 @@ public class Transfer {
     private AppUser appUserFrom;
 
 //    tutaj nie jestem pewien czy many:1
-    @ManyToOne
-    private AppUser appUserTo;
+//    @OneToOne
+    private Long accountNR;
     private Float amountOfMoney;
 
 
-    public Transfer(LocalDateTime date, AppUser appUserFrom, AppUser appUserTo, float amountOfMoney) {
+    public Transfer(LocalDateTime date, AppUser appUserFrom, Long accountNrTo, float amountOfMoney) {
         this.date = date;
         this.appUserFrom = appUserFrom;
-        this.appUserTo = appUserTo;
+        this.accountNR = accountNrTo;
         this.amountOfMoney = amountOfMoney;
+    }
+
+    public String transferMoney(){
+        return "Money transfered succesfully!";
     }
 }

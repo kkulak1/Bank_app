@@ -1,6 +1,8 @@
 
 package com.example.BankApplication.transfer;
 
+import com.example.BankApplication.account.AccountService;
+import com.example.BankApplication.appuser.AppUser;
 import com.example.BankApplication.appuser.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,28 +14,36 @@ import java.util.Optional;
 @AllArgsConstructor
 public class TransferService {
     private final TransferRepository transferRepository;
-    private final AppUserService appUserService;
-    private final TransferValidator transferValidator;
 
+    private final AccountService accountService;
     public void saveTransfer(Transfer transfer){
         transferRepository.save(transfer);
     }
 
-    public Optional<Transfer> getTransfer(String transfer){
-        return transferRepository.findByTransfer(transfer);
+    public Optional<Transfer> getTransfer(Transfer transfer){
+        return transferRepository.findById(transfer.getId());
     }
 
     public String transfer(TransferRequest request) {
+
 //        boolean isValidEmail = emailValidator.
 //                test(request.getEmail());
-        boolean isValidNr = transferValidator
-                .testTransfer(request.getAccountNR(), request.getAmountOfMoney());
-        return "String ";
-    }
+
+        if (!accountService.getByNr(request.getAccountNR()).isEmpty())
+            throw new IllegalStateException("No such account nr!");
+
 //        Transfer transfer = new Transfer(
 //                LocalDateTime.now(),
+//                appUser,
 //                request.getAccountNR(),
 //                request.getAmountOfMoney()
-//        )
+//        );
+
+
+
+
+        return "Transfer sent successfully!";
+    }
+
 }
 
