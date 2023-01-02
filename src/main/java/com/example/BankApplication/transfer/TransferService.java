@@ -5,6 +5,7 @@ import com.example.BankApplication.account.AccountService;
 import com.example.BankApplication.appuser.AppUser;
 import com.example.BankApplication.appuser.AppUserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class TransferService {
     private final TransferRepository transferRepository;
+    private final AppUserService appUserService;
 
     private final AccountService accountService;
     public void saveTransfer(Transfer transfer){
@@ -29,15 +31,19 @@ public class TransferService {
 //        boolean isValidEmail = emailValidator.
 //                test(request.getEmail());
 
+        AppUser appUser = appUserService.getCUrrentUser();
+
         if (!accountService.getByNr(request.getAccountNR()).isEmpty())
             throw new IllegalStateException("No such account nr!");
 
-//        Transfer transfer = new Transfer(
-//                LocalDateTime.now(),
-//                appUser,
-//                request.getAccountNR(),
-//                request.getAmountOfMoney()
-//        );
+//        TODO: check if user has enough money
+
+        Transfer transfer = new Transfer(
+                LocalDateTime.now(),
+                appUser,
+                request.getAccountNR(),
+                request.getAmountOfMoney()
+        );
 
 
 

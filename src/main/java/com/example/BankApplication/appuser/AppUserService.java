@@ -3,17 +3,22 @@ package com.example.BankApplication.appuser;
 import com.example.BankApplication.account.AccountService;
 import com.example.BankApplication.registration.token.ConfirmationToken;
 import com.example.BankApplication.registration.token.ConfirmationTokenService;
+import com.example.BankApplication.security.util.JwtUtil;
 import com.example.BankApplication.transfer.TransferRequest;
 import com.example.BankApplication.transfer.TransferService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -27,6 +32,7 @@ public class AppUserService implements UserDetailsService {
     private final ConfirmationTokenService confirmationTokenService;
     private final TransferService transferService;
     private final static String USER_NOT_FOUND_MSG = "User with email %s not found!";
+    private final JwtUtil jwtUtil;
 
     @Override
     public UserDetails loadUserByUsername(String email)
@@ -99,5 +105,13 @@ public class AppUserService implements UserDetailsService {
         transferService.transfer(request);
 
         return "true";
+    }
+
+    public AppUser getCUrrentUser(){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String token = request.getHeader("Authorization").split(" ")[1];
+        String username = jwtUtil.extractUsername(token);
+        AppUser appUser = findAppUserByUsername(username);
+        return appUser;
     }
 }

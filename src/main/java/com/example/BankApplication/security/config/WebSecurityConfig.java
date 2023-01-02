@@ -1,7 +1,7 @@
 package com.example.BankApplication.security.config;
 
 import com.example.BankApplication.appuser.AppUserService;
-import com.example.BankApplication.filter.JwtRequestFilter;
+import com.example.BankApplication.security.filter.JwtRequestFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,21 +26,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()   //to send post request without being rejected
-                .authorizeRequests()
-                .antMatchers("/api/v*/registration/**")//allow everything after registration
-                .permitAll()
-                .anyRequest()
-                .authenticated().and()
-                .formLogin();
+//        http
+//                .csrf().disable()   //to send post request without being rejected
+//                .authorizeRequests()
+//                .antMatchers("/api/v*/registration/**")//allow everything after registration
+//                .permitAll()
+//                .anyRequest()
+//                .authenticated().and()
+//                .formLogin();
+
 
 
 //        http.csrf().disable()
-//                .authorizeRequests().antMatchers("/authenticate").permitAll().
-//                anyRequest().authenticated().and().sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // make sure this filter is called before UsernamePasswordAuthen...
+//                .authorizeRequests().antMatchers("/api/v*/registration").permitAll().
+//                anyRequest().authenticated();
+
+        http.csrf().disable()
+                .authorizeRequests().antMatchers("/authenticate").permitAll()
+                .antMatchers("/api/v1/registration").permitAll().
+                antMatchers("/home-page").permitAll().
+                anyRequest().authenticated().and()
+                .exceptionHandling().and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // make sure this filter is called before UsernamePasswordAuthen...
 
 //        http.csrf().disable();
 //        http.sessionManagement().sessionCreationPolicy(STATELESS);
@@ -79,17 +87,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 ////                .logoutSuccessHandler(logoutSuccessHandler());
     }
 
-//    @Bean
-//    @Override
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(appUserService);       //added that       to second configuration
-        auth.authenticationProvider(daoAuthenticationProvider());
+        auth.userDetailsService(appUserService);       //added that       to second configuration
+//        auth.authenticationProvider(daoAuthenticationProvider());
     }
+
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws  Exception{
+//        auth.userDetailsService(appUserService);
+//    }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider(){
