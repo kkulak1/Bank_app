@@ -26,14 +26,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-////        http
-////                .csrf().disable()   //to send post request without being rejected
-////                .authorizeRequests()
-////                .antMatchers("/api/v*/registration/**")//allow everything after registration
-////                .permitAll()
-////                .anyRequest()
-////                .authenticated().and()
-////                .formLogin();
+//        http
+//                .csrf().disable()   //to send post request without being rejected
+//                .authorizeRequests()
+//                .antMatchers("/api/v*/registration/**")//allow everything after registration
+//                .permitAll()
+//                .anyRequest()
+//                .authenticated().and()
+//                .formLogin();
 
 ////        http.csrf().disable()
 ////                .authorizeRequests().antMatchers("/api/v*/registration").permitAll().
@@ -45,14 +45,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/register/**").permitAll()
-                .antMatchers("/register").permitAll()
-                .antMatchers("/").permitAll()
-                .antMatchers("/home-page").permitAll()
+                .antMatchers("/login", "/api/v*/registration/**", "/register", "/").permitAll()
+//                .antMatchers("/api/v*/registration/**").permitAll()
+//                .antMatchers("/register").permitAll()
+//                .antMatchers("/").permitAll()
+//                .antMatchers("/home-page").permitAll()
 
 //                .antMatchers("/register/**").permitAll()
-                .anyRequest().authenticated().and()
+                .anyRequest().authenticated()
+                .and()
 //                .exceptionHandling().and()
                 .formLogin().loginPage("/login").defaultSuccessUrl("/")
                 .and()
@@ -107,7 +108,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(appUserService);       //added that       to second configuration
+//        auth.userDetailsService(appUserService);       //added that       to second configuration
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
