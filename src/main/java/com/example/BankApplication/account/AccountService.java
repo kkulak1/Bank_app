@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.AccountNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -48,5 +49,10 @@ public class AccountService {
         }
 
         return Long.parseLong(generatedNr.toString());
+    }
+    public Account findAccountByAppUser(AppUser appUser) throws AccountNotFoundException {
+        return accountRepository.findByAppUser(appUser)
+                .orElseThrow(()->
+                        new AccountNotFoundException(String.format("Account not faound!")));
     }
 }
