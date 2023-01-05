@@ -16,7 +16,6 @@ import java.util.Optional;
 public class TransferService {
     private final TransferRepository transferRepository;
     private final AppUserService appUserService;
-
     private final AccountService accountService;
     public void saveTransfer(Transfer transfer){
         transferRepository.save(transfer);
@@ -44,9 +43,6 @@ public class TransferService {
                 request.getAccountNR(),
                 request.getAmountOfMoney()
         );
-
-
-
 
         return "Transfer sent successfully!";
     }

@@ -30,7 +30,7 @@ public class AppUserService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
-    private final TransferService transferService;
+//    private final TransferService transferService;
     private final static String USER_NOT_FOUND_MSG = "User with email %s not found!";
     private final JwtUtil jwtUtil;
 
@@ -100,12 +100,12 @@ public class AppUserService implements UserDetailsService {
         return appUserRepository.enableAppUser(email);
     }
 
-    public String transfer(TransferRequest request){
-
-        transferService.transfer(request);
-
-        return "true";
-    }
+//    public String transfer(TransferRequest request){
+//
+//        transferService.transfer(request);
+//
+//        return "true";
+//    }
 
     public AppUser getCUrrentUser(){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();

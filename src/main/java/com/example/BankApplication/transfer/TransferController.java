@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path="/user/{username}/transfer")
+@RequestMapping(path="/user/transfer")
 @AllArgsConstructor
 public class TransferController {
     private final TransferService transferService;
