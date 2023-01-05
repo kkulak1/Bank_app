@@ -32,10 +32,10 @@ public class AppUserResource {
         this.authenticationManager = authenticationManager;
     }
 
-    @GetMapping("/")
-    public String homePage(){
-        return "Welcome!";
-    }
+//    @GetMapping("/")
+//    public String homePage(){
+//        return "Welcome!";
+//    }
 
     @GetMapping("/{username}")
     public ResponseEntity<AppUser> getUserDetails (@PathVariable("username") String username) {

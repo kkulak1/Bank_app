@@ -1,0 +1,67 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+    background-image: url("../images/main_bg.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+#text h1{
+    color: white;
+   font-size: 180px;
+   font-family: Cambria;
+}
+
+
+.button-wrapper a{
+    color: white;
+}
+.login{
+    margin-right: 10px;
+    background-color: rgb(219, 21, 21);
+    border: 1px solid black ;
+}
+
+.register{
+    background-color: goldenrod;
+    border: 1px solid black ;
+}
+
+.card .card-title{
+    color: white;
+}
+
+
+.card .form-control{
+    margin: 10px 0px;
+    box-shadow: 0px 3px 6px rgb(0, 14, 53);
+}
+
+.card button{
+    background-color: rgb(219, 21, 21);
+    border: 1px solid black ;
+    color: white;
+    margin: 10px 0px;
+    box-shadow: 0px 3px 6px rgb(0, 14, 53);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
