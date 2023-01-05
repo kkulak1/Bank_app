@@ -32,11 +32,6 @@ public class AppUserResource {
         this.authenticationManager = authenticationManager;
     }
 
-//    @GetMapping("/")
-//    public String homePage(){
-//        return "Welcome!";
-//    }
-
     @GetMapping("/{username}")
     public ResponseEntity<AppUser> getUserDetails (@PathVariable("username") String username) {
         AppUser appUser = appUserService.findAppUserByUsername(username);
@@ -59,11 +54,6 @@ public class AppUserResource {
     public ResponseEntity<?> deleteAppUser (@PathVariable("id") Long id) {
         appUserService.deleteAppUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @RequestMapping("/hello")
-    public String hello(){
-        return "hello";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)      // changed from authenticate to login

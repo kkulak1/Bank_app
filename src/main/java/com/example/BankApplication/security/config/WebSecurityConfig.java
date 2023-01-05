@@ -34,9 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 ////                .anyRequest()
 ////                .authenticated().and()
 ////                .formLogin();
-//
-//
-//
+
 ////        http.csrf().disable()
 ////                .authorizeRequests().antMatchers("/api/v*/registration").permitAll().
 ////                anyRequest().authenticated();
@@ -46,15 +44,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                anyRequest().authenticated();
 
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/login").permitAll()
-                .antMatchers("/api/v1/registration").permitAll().
-                antMatchers("/register").permitAll().
-                antMatchers("/").permitAll().
-                antMatchers("/home-page").permitAll().
-                anyRequest().authenticated().and()
-                .exceptionHandling().and().sessionManagement()
+                .authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/register/**").permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/home-page").permitAll()
+
+//                .antMatchers("/register/**").permitAll()
+                .anyRequest().authenticated().and()
+//                .exceptionHandling().and()
+                .formLogin().loginPage("/login").defaultSuccessUrl("/")
+                .and()
+                .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // make sure this filter is called before UsernamePasswordAuthen...
+
+
 
 //        http.csrf().disable();
 //        http.sessionManagement().sessionCreationPolicy(STATELESS);
@@ -102,7 +108,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(appUserService);       //added that       to second configuration
-//        auth.authenticationProvider(daoAuthenticationProvider());
+        auth.authenticationProvider(daoAuthenticationProvider());
     }
 
 //    @Autowired

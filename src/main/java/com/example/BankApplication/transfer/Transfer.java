@@ -49,7 +49,7 @@ public class Transfer {
         this.amountOfMoney = amountOfMoney;
     }
 
-    public String transferMoney(){
-        return "Money transfered succesfully!";
-    }
+//    public String transferMoney(){
+//        return "Money transfered succesfully!";
+//    }
 }
