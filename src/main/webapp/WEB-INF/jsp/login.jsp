@@ -15,10 +15,10 @@
         <h1 class="form-header card-title mb-3">
             <i class="fa fa-user-circle"></i> Login
         </h1>
-        <form action="" class="login-form">
+        <form action="/login" method="POST" name="Login" class="login-form">
 
             <div class="form-group col">
-                <input type="email" name="email" class="form-control form-control-lg" placeholder="Enter email"/>
+                <input type="email" name="username" class="form-control form-control-lg" placeholder="Enter email"/>
             </div>
 
             <div class="form-group col">

@@ -30,4 +30,13 @@ public class IndexController {
         getRegisterPage.addObject("PageTitle", "Register");
         return getRegisterPage;
     }
+
+    @GetMapping("/dashboard")
+    public ModelAndView getDashBoard(){
+        ModelAndView getDashboardPage = new ModelAndView("dashboard");
+        System.out.println("In Dashboard Page Controller");
+        getDashboardPage.addObject("PageTitle", "Dashboard");
+        return getDashboardPage;
+    }
 }
+

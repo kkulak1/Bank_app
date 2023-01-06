@@ -55,4 +55,10 @@ public class AccountService {
                 .orElseThrow(()->
                         new AccountNotFoundException(String.format("Account not faound!")));
     }
+
+    public Account findAccountByNr(Long accountNR) throws AccountNotFoundException {
+        return accountRepository.findByNr(accountNR)
+                .orElseThrow(()->
+                        new AccountNotFoundException(String.format("Account not found!")));
+    }
 }

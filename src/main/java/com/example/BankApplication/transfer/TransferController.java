@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.security.auth.login.AccountNotFoundException;
 
 @RestController
-@RequestMapping(path="/user/transfer")
+@RequestMapping(path="/transfer")
 @AllArgsConstructor
 public class TransferController {
     private final TransferService transferService;

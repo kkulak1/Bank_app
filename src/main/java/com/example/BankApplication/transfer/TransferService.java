@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.security.auth.login.AccountNotFoundException;
 import java.time.LocalDateTime;
+import java.util.AbstractCollection;
 import java.util.Optional;
 
 @Service
@@ -27,7 +28,7 @@ public class TransferService {
     public Optional<Transfer> getTransfer(Transfer transfer){
         return transferRepository.findById(transfer.getId());
     }
-    @Transactional
+//    @Transactional
     public String transfer(TransferRequest request) throws AccountNotFoundException {
 
 //        boolean isValidEmail = emailValidator.
@@ -35,15 +36,13 @@ public class TransferService {
 
         AppUser appUser = appUserService.getCUrrentUser();
 
-        if (!accountService.getByNr(request.getAccountNR()).isEmpty())
+        if (accountService.getByNr(request.getAccountNR()).isEmpty())
             throw new IllegalStateException("No such account nr!");
-
-//        TODO: check if user has enough money
 
         Account account = accountService.findAccountByAppUser(appUser);
 
         if (account.getBalance() < request.getAmountOfMoney()){
-            throw new IllegalStateException("Not enough money");
+            throw new IllegalStateException("Not enough money!");
         }
 
         Transfer transfer = new Transfer(
@@ -53,12 +52,17 @@ public class TransferService {
                 request.getAmountOfMoney()
         );
 
+//        return transfer.getAccountNR().toString() +" , "+ transfer.getCurrentDate().toString() +" , "+ transfer.getAppUserFrom().getEmail() +" , "+ transfer.getAmountOfMoney().toString();
+//
         account.setBalance(account.getBalance() - request.getAmountOfMoney());
 
+        Account account1 = accountService.findAccountByNr(request.getAccountNR());
+        account1.setBalance(account1.getBalance() + request.getAmountOfMoney());
+
+//        saveTransfer(transfer);
         saveTransfer(transfer);
 
-        return appUser.getEmail();
+        return appUser.getEmail() + " " +account1.getNr().toString();
     }
-
 }
 

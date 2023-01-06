@@ -3,10 +3,12 @@ package com.example.BankApplication.transfer;
 import lombok.*;
 
 @Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class TransferRequest {
-    private final Long accountNR;
-    private final Float amountOfMoney;
+    private Long accountNR;
+    private Float amountOfMoney;
 }

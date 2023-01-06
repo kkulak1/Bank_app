@@ -15,13 +15,13 @@
         <h1 class="form-header card-title mb-3">
             <i class="fa fa-edit"></i> Register
         </h1>
-        <form action="" class="reg-form">
+        <form action="/register"method="POST" name="myForm" class="reg-form">
             <div class="row">
                 <div class="form-group col">
-                    <input type="text" name="first_name" class="form-control form-control-lg" placeholder="Enter first name"/>
+                    <input type="text" name="firstName" class="form-control form-control-lg" placeholder="Enter first name"/>
                 </div>
                 <div class="form-group col">
-                    <input type="text" name="last_name" class="form-control form-control-lg" placeholder="Enter last name"/>
+                    <input type="text" name="lastName" class="form-control form-control-lg" placeholder="Enter last name"/>
                 </div>
             </div>
             <div class="form-group col">

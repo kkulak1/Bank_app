@@ -45,17 +45,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login", "/api/v*/registration/**", "/register", "/").permitAll()
+                .antMatchers("/login", "/register/**", "/register", "/", "/dashboard").permitAll()
 //                .antMatchers("/api/v*/registration/**").permitAll()
 //                .antMatchers("/register").permitAll()
 //                .antMatchers("/").permitAll()
 //                .antMatchers("/home-page").permitAll()
-
 //                .antMatchers("/register/**").permitAll()
-                .anyRequest().authenticated()
+//                .anyRequest().authenticated()
                 .and()
 //                .exceptionHandling().and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/")
+                .formLogin()
+                .loginPage("/login").defaultSuccessUrl("/dashboard")
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
