@@ -43,15 +43,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .authorizeRequests().antMatchers("/api/v*/registration").permitAll().
 //                anyRequest().authenticated();
 
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/login", "/register/**", "/register", "/", "/dashboard").permitAll()
+
 //                .antMatchers("/api/v*/registration/**").permitAll()
 //                .antMatchers("/register").permitAll()
 //                .antMatchers("/").permitAll()
 //                .antMatchers("/home-page").permitAll()
 //                .antMatchers("/register/**").permitAll()
 //                .anyRequest().authenticated()
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/login", "/register/**", "/register", "/", "/dashboard").permitAll()
                 .and()
 //                .exceptionHandling().and()
                 .formLogin()
@@ -60,8 +61,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // make sure this filter is called before UsernamePasswordAuthen...
-
-
 
 //        http.csrf().disable();
 //        http.sessionManagement().sessionCreationPolicy(STATELESS);

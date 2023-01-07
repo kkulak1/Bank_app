@@ -56,8 +56,8 @@ public class AppUserResource {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)      // changed from authenticate to login
-    public ResponseEntity<?> createAuthenticationToken(AuthenticationRequest authenticationRequest) throws Exception {
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)      // changed from authenticate to login
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())

@@ -1,6 +1,7 @@
 package com.example.BankApplication.account;
 
 import com.example.BankApplication.appuser.AppUser;
+import com.example.BankApplication.appuser.AppUserService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.Optional;
 //@RequiredArgsConstructor
 public class AccountService {
     private final AccountRepository accountRepository;
+    private final AppUserService appUserService;
 
     public Optional<Account> getByNr(Long nr){
         return accountRepository.findByNr(nr);
@@ -60,5 +62,21 @@ public class AccountService {
         return accountRepository.findByNr(accountNR)
                 .orElseThrow(()->
                         new AccountNotFoundException(String.format("Account not found!")));
+    }
+
+    public String createAccount(AccountRequest accountRequest) {
+
+        AppUser appUser = appUserService.getCUrrentUser();
+
+        float balance = 0.0F;
+
+        Account newAccount = new Account(
+                appUser,
+                balance
+        );
+
+        addAccount(newAccount);
+
+        return "Account created successfully.";
     }
 }

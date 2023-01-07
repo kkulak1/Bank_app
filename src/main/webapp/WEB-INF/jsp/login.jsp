@@ -15,7 +15,7 @@
         <h1 class="form-header card-title mb-3">
             <i class="fa fa-user-circle"></i> Login
         </h1>
-        <form action="/login" method="POST" name="Login" class="login-form">
+        <form action="/authenticate" method="POST" name="Login" class="login-form">
 
             <div class="form-group col">
                 <input type="email" name="username" class="form-control form-control-lg" placeholder="Enter email"/>
