@@ -31,6 +31,14 @@ public class IndexController {
         return getRegisterPage;
     }
 
+    @GetMapping("/error")
+    public ModelAndView getError(){
+        ModelAndView getErrorPage = new ModelAndView("error");
+        System.out.println("In Error Page Controller");
+        getErrorPage.addObject("PageTitle", "Error");
+        return getErrorPage;
+    }
+
     @GetMapping("/dashboard")
     public ModelAndView getDashBoard(){
         ModelAndView getDashboardPage = new ModelAndView("dashboard");
