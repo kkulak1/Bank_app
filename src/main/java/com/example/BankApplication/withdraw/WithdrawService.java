@@ -25,7 +25,6 @@ public class WithdrawService {
     public Optional<Withdraw> getWithdraw(Withdraw withdraw){
         return withdrawRepository.findById(withdraw.getId());
     }
-    //    @Transactional
     public String withdraw(WithdrawRequest request) throws AccountNotFoundException {
 
         AppUser appUser = appUserService.getCUrrentUser();
