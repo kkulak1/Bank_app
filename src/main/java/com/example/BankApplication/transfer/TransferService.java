@@ -62,7 +62,7 @@ public class TransferService {
 //        saveTransfer(transfer);
         saveTransfer(transfer);
 
-        return appUser.getEmail() + " " +account1.getNr().toString();
+        return appUser.getEmail() + " " + account.getNr() + " , " + account1.getNr().toString() + " ";
     }
 }
 
