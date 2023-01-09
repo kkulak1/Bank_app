@@ -28,9 +28,6 @@ public class WithdrawService {
     //    @Transactional
     public String withdraw(WithdrawRequest request) throws AccountNotFoundException {
 
-//        boolean isValidEmail = emailValidator.
-//                test(request.getEmail());
-
         AppUser appUser = appUserService.getCUrrentUser();
 
         if (accountService.getByNr(request.getAccountNR()).isEmpty())
@@ -44,15 +41,14 @@ public class WithdrawService {
                 request.getAmountOfMoney()
         );
 
-//        return transfer.getAccountNR().toString() +" , "+ transfer.getCurrentDate().toString() +" , "+ transfer.getAppUserFrom().getEmail() +" , "+ transfer.getAmountOfMoney().toString();
-
-
         Account accountFrom = accountService.findAccountByNr(request.getAccountNR());
 
         if (accountFrom.getBalance() < request.getAmountOfMoney())
             throw new IllegalStateException("Not enough money in account!");
 
         accountFrom.setBalance(accountFrom.getBalance() - request.getAmountOfMoney());
+
+        accountService.saveAccount(accountFrom);
 
         saveWithdraw(withdraw);
 

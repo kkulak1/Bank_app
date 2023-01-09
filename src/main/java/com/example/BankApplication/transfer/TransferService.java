@@ -28,20 +28,15 @@ public class TransferService {
     public Optional<Transfer> getTransfer(Transfer transfer){
         return transferRepository.findById(transfer.getId());
     }
-//    @Transactional
     public String transfer(TransferRequest request) throws AccountNotFoundException {
-
-//        boolean isValidEmail = emailValidator.
-//                test(request.getEmail());
-
         AppUser appUser = appUserService.getCUrrentUser();
 
         if (accountService.getByNr(request.getAccountNR()).isEmpty())
             throw new IllegalStateException("No such account nr!");
 
-        Account account = accountService.findAccountByAppUser(appUser);
+        Account accountFrom = accountService.findAccountByAppUser(appUser);
 
-        if (account.getBalance() < request.getAmountOfMoney()){
+        if (accountFrom.getBalance() < request.getAmountOfMoney()){
             throw new IllegalStateException("Not enough money!");
         }
 
@@ -52,17 +47,16 @@ public class TransferService {
                 request.getAmountOfMoney()
         );
 
-//        return transfer.getAccountNR().toString() +" , "+ transfer.getCurrentDate().toString() +" , "+ transfer.getAppUserFrom().getEmail() +" , "+ transfer.getAmountOfMoney().toString();
-//
-        account.setBalance(account.getBalance() - request.getAmountOfMoney());
+        Account accountTo = accountService.findAccountByNr(request.getAccountNR());
 
-        Account account1 = accountService.findAccountByNr(request.getAccountNR());
-        account1.setBalance(account1.getBalance() + request.getAmountOfMoney());
+        accountFrom.setBalance(accountFrom.getBalance() - request.getAmountOfMoney());
+        accountTo.setBalance(accountTo.getBalance() + request.getAmountOfMoney());
 
-//        saveTransfer(transfer);
+        accountService.saveAccount(accountFrom);
+        accountService.saveAccount(accountTo);
         saveTransfer(transfer);
 
-        return appUser.getEmail() + " " + account.getNr() + " , " + account1.getNr().toString() + " ";
+        return appUser.getEmail() + " " + accountFrom.getNr() + " , " + accountTo.getNr().toString() + " ";
     }
 }
 

@@ -17,6 +17,7 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final AppUserService appUserService;
     private final AccountService accountService;
+    public void savePayment(Payment payment){paymentRepository.save(payment);}
     public String payment(PaymentRequest request) throws AccountNotFoundException {
         AppUser appUser = appUserService.getCUrrentUser();
 
@@ -38,7 +39,14 @@ public class PaymentService {
         );
 
 
+        Account accountTo = accountService.findAccountByNr(request.getAccountNrTo());
 
+        accountFrom.setBalance(accountFrom.getBalance() - request.getPaymentAmount());
+        accountTo.setBalance(accountTo.getBalance() + request.getPaymentAmount());
+
+        accountService.saveAccount(accountFrom);
+        accountService.saveAccount(accountTo);
+        savePayment(payment);
 
         return appUser.getEmail();
     }

@@ -30,6 +30,7 @@ public class AccountService {
         account.setNr(generateAccountNr());
 
         accountRepository.save(account);
+//        accountRepository.
     }
 
 //    @Override
@@ -78,5 +79,9 @@ public class AccountService {
         addAccount(newAccount);
 
         return "Account created successfully.";
+    }
+
+    public void saveAccount(Account account){
+        accountRepository.save(account);
     }
 }

@@ -25,17 +25,15 @@ public class DepositService {
     public Optional<Deposit> getDeposit(Deposit deposit){
         return depositRepository.findById(deposit.getId());
     }
-    //    @Transactional
     public String deposit(DepositRequest request) throws AccountNotFoundException {
 
-//        boolean isValidEmail = emailValidator.
-//                test(request.getEmail());
 
         AppUser appUser = appUserService.getCUrrentUser();
 
+        Account accountFrom = accountService.findAccountByAppUser(appUser);
+
         if (accountService.getByNr(request.getAccountNR()).isEmpty())
             throw new IllegalStateException("No such account nr!");
-
 
         Deposit deposit = new Deposit(
                 LocalDateTime.now(),
@@ -44,13 +42,13 @@ public class DepositService {
                 request.getAmountOfMoney()
         );
 
-//        return transfer.getAccountNR().toString() +" , "+ transfer.getCurrentDate().toString() +" , "+ transfer.getAppUserFrom().getEmail() +" , "+ transfer.getAmountOfMoney().toString();
-
-
         Account accountTo = accountService.findAccountByNr(request.getAccountNR());
+
+        accountFrom.setBalance(accountFrom.getBalance() - request.getAmountOfMoney());
         accountTo.setBalance(accountTo.getBalance() + request.getAmountOfMoney());
 
-
+        accountService.saveAccount(accountFrom);
+        accountService.saveAccount(accountTo);
         saveDeposit(deposit);
 
         return appUser.getEmail() + " " +accountTo.getNr().toString();
