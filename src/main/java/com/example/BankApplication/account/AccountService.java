@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.AccountNotFoundException;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Service
@@ -30,10 +31,8 @@ public class AccountService {
         account.setNr(generateAccountNr());
 
         accountRepository.save(account);
-//        accountRepository.
     }
 
-//    @Override
     public Long generateAccountNr(){
         StringBuilder generatedNr = new StringBuilder();
 
@@ -65,9 +64,10 @@ public class AccountService {
                         new AccountNotFoundException(String.format("Account not found!")));
     }
 
-    public String createAccount(AccountRequest accountRequest) {
+    public String createAccount(AccountRequest accountRequest, HttpSession httpSession) {
+        String email = (String) httpSession.getAttribute("username");
 
-        AppUser appUser = appUserService.getCUrrentUser();
+        AppUser appUser = appUserService.findAppUserByUsername(email);
 
         float balance = 0.0F;
 

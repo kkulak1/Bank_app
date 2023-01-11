@@ -59,6 +59,7 @@ public class RegistrationService {
                 buildEmail(request.getFirstName(), link));
 
         return token;
+//        return redirect
     }
 
     @Transactional

@@ -2,18 +2,23 @@ package com.example.BankApplication.account;
 
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.net.http.HttpClient;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(path = "dashboard/add-account")
+//@RequestMapping(path = "dashboard")
 public class AccountController {
     private final AccountService accountService;
 
-    @PostMapping
-    public String addAccount(AccountRequest accountRequest){
-        return accountService.createAccount(accountRequest);
+    @RequestMapping(value = "/dashboard/add-account", method = RequestMethod.POST)
+    public String addAccount(AccountRequest accountRequest, HttpSession httpSession){
+        return accountService.createAccount(accountRequest, httpSession);
+
+//        return "redirect:/dashboard";
     }
 }

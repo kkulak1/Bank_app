@@ -207,7 +207,7 @@
         <div class="card">
             <!--card body-->
             <div class="card-body">
-                <form action="" class="add-account-form">
+                <form action="/dashboard/add-account" method="POST" name=/dashboard/add-account class="add-account-form">
                     <!--form group-->
                     <div class="form-group mb-3">
                         <label for="">Enter account name</label>
@@ -224,12 +224,20 @@
                         </select>
                     </div>
 
+<%--                    actionResponse.setRenderParameter("jspPage","/dashboard.jsp")--%>
+
                     <!--form group-->
 
 
                     <div class="form-group my-2">
                         <button id="" class="btn btn-md transact-btn">Add Account</button>
                     </div>
+
+
+
+<%--                    <c:redirect url="/dasboard.jsp"/>--%>
+
+
 
                 </form>
             </div>

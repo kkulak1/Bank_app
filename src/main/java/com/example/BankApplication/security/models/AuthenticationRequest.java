@@ -1,12 +1,15 @@
 package com.example.BankApplication.security.models;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.servlet.http.HttpSession;
+
 @NoArgsConstructor
+@Getter
 public class AuthenticationRequest {
     private String username;
     private String password;
-
 //    public AuthenticationRequest() {
 //    }
 
