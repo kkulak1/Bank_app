@@ -1,3 +1,7 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +19,17 @@
         <h1 class="form-header card-title mb-3">
             <i class="fa fa-user-circle"></i> Login
         </h1>
+
+
+        <!-- Display Message -->
+        <c:if test="${logged_out != null}">
+            <div class="alert alert-info text-center border border-info">
+                <b>${logged_out}</b>
+            </div>
+        </c:if>
+        <!-- End Of Display Message -->
+
+
         <form action="/login" method="POST" name="Login" class="login-form">
 
             <div class="form-group col">
