@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.security.auth.login.AccountNotFoundException;
 
@@ -15,7 +16,7 @@ public class DepositController {
     private final DepositService depositService;
 
     @PostMapping
-    public String sendDeposit(@RequestBody DepositRequest request) throws AccountNotFoundException {
+    public RedirectView sendDeposit(@RequestBody DepositRequest request) throws AccountNotFoundException {
         return depositService.deposit(request);
     }
 }

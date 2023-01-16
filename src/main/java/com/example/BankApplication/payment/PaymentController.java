@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.security.auth.login.AccountNotFoundException;
 
@@ -15,7 +16,7 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping
-    public String doPayment(@RequestBody PaymentRequest request) throws AccountNotFoundException {
+    public RedirectView doPayment(@RequestBody PaymentRequest request) throws AccountNotFoundException {
         return paymentService.payment(request);
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.*;
@@ -71,7 +72,7 @@ public class AppUserResource {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)      // changed from authenticate to login
-    public ResponseEntity<?> createAuthenticationToken(AuthenticationRequest authenticationRequest, HttpSession session) throws Exception {
+    public RedirectView createAuthenticationToken(AuthenticationRequest authenticationRequest, HttpSession session) throws Exception {
 
         CURRENTUSER = authenticationRequest.getUsername();      //Stinky cheese
         try {
@@ -87,28 +88,12 @@ public class AppUserResource {
 
         final String jwt = jwtTokenUtil.generateToken(userDetails);
 
-//        HttpSession session = request.getSession();
-
-//        Cookie LoginCookie = new Cookie("username", authenticationRequest.getUsername());
-//        LoginCookie.setMaxAge(30*60);
-//        response.addCookie(LoginCookie);
-//        response.sendRedirect("dashboard.jsp");
-//        session.setAttribute("email", authenticationRequest.getUsername());
-
-//        session.setAttribute("username", authenticationRequest.getUsername());
-//        session.setAttribute("username", authenticationRequest.getUsername());
-
-//        System.out.println("+++++++++" + authenticationRequest.getUsername()+ "+++++++++" );
-
-
-//        userStorage.setUser(authenticationRequest.getUsername());
-
-
 //        return "redirect:/dashboard";
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+//        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        return new RedirectView("/dashboard");
     }
 
-    public String getUser(){
+    public String getUsername(){
         return CURRENTUSER;
     }
 }

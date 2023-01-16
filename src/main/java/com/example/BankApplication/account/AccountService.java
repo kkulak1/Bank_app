@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.security.auth.login.AccountNotFoundException;
 import javax.servlet.http.HttpSession;
@@ -27,7 +28,6 @@ import java.util.Optional;
 public class AccountService {
     private final AccountRepository accountRepository;
     private final AppUserService appUserService;
-    private UserStorage userStorage;
     private final AppUserResource appUserResource;
 
     public Optional<Account> getByNr(Long nr){
@@ -75,11 +75,8 @@ public class AccountService {
                         new AccountNotFoundException(String.format("Account not found!")));
     }
 
-    public String createAccount(AccountRequest accountRequest) {
-//        String email = (String) httpSession.getAttribute("username");
-
-        String email = appUserResource.getUser();
-
+    public RedirectView createAccount(AccountRequest accountRequest) {
+        String email = appUserResource.getUsername();
         AppUser appUser = appUserService.findAppUserByUsername(email);
 
         float balance = 0.0F;
@@ -91,7 +88,7 @@ public class AccountService {
 
         addAccount(newAccount);
 
-        return "Account created successfully.";
+        return new RedirectView("/dashboard");
     }
 
     public void saveAccount(Account account){

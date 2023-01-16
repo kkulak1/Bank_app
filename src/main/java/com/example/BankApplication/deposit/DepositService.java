@@ -3,10 +3,12 @@ package com.example.BankApplication.deposit;
 import com.example.BankApplication.account.Account;
 import com.example.BankApplication.account.AccountService;
 import com.example.BankApplication.appuser.AppUser;
+import com.example.BankApplication.appuser.AppUserResource;
 import com.example.BankApplication.appuser.AppUserService;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.security.auth.login.AccountNotFoundException;
 import java.time.LocalDateTime;
@@ -18,6 +20,7 @@ public class DepositService {
     private final DepositRepository depositRepository;
     private final AppUserService appUserService;
     private final AccountService accountService;
+    private final AppUserResource appUserResource;
     public void saveDeposit(Deposit deposit){
         depositRepository.save(deposit);
     }
@@ -25,10 +28,11 @@ public class DepositService {
     public Optional<Deposit> getDeposit(Deposit deposit){
         return depositRepository.findById(deposit.getId());
     }
-    public String deposit(DepositRequest request) throws AccountNotFoundException {
+    public RedirectView deposit(DepositRequest request) throws AccountNotFoundException {
+//        AppUser appUser = appUserService.getCUrrentUser();
 
-
-        AppUser appUser = appUserService.getCUrrentUser();
+        String email = appUserResource.getUsername();
+        AppUser appUser = appUserService.findAppUserByUsername(email);
 
         Account accountFrom = accountService.findAccountByAppUser(appUser);
 
@@ -51,6 +55,6 @@ public class DepositService {
         accountService.saveAccount(accountTo);
         saveDeposit(deposit);
 
-        return appUser.getEmail() + " " +accountTo.getNr().toString();
+        return new RedirectView("/dashboard");
     }
 }

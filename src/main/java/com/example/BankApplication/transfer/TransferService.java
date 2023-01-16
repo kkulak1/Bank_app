@@ -4,11 +4,13 @@ package com.example.BankApplication.transfer;
 import com.example.BankApplication.account.Account;
 import com.example.BankApplication.account.AccountService;
 import com.example.BankApplication.appuser.AppUser;
+import com.example.BankApplication.appuser.AppUserResource;
 import com.example.BankApplication.appuser.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.security.auth.login.AccountNotFoundException;
 import java.time.LocalDateTime;
@@ -21,6 +23,7 @@ public class TransferService {
     private final TransferRepository transferRepository;
     private final AppUserService appUserService;
     private final AccountService accountService;
+    private final AppUserResource appUserResource;
     public void saveTransfer(Transfer transfer){
         transferRepository.save(transfer);
     }
@@ -28,8 +31,11 @@ public class TransferService {
     public Optional<Transfer> getTransfer(Transfer transfer){
         return transferRepository.findById(transfer.getId());
     }
-    public String transfer(TransferRequest request) throws AccountNotFoundException {
-        AppUser appUser = appUserService.getCUrrentUser();
+    public RedirectView transfer(TransferRequest request) throws AccountNotFoundException {
+//        AppUser appUser = appUserService.getCUrrentUser();
+
+        String email = appUserResource.getUsername();
+        AppUser appUser = appUserService.findAppUserByUsername(email);
 
         if (accountService.getByNr(request.getAccountNR()).isEmpty())
             throw new IllegalStateException("No such account nr!");
@@ -56,7 +62,7 @@ public class TransferService {
         accountService.saveAccount(accountTo);
         saveTransfer(transfer);
 
-        return appUser.getEmail() + " " + accountFrom.getNr() + " , " + accountTo.getNr().toString() + " ";
+        return new RedirectView("/dashboard");
     }
 }
 

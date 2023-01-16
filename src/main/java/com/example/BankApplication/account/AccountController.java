@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,9 +24,7 @@ public class AccountController {
     private final AccountService accountService;
 
     @RequestMapping(value = "/dashboard/add-account", method = RequestMethod.POST)
-    public String addAccount(AccountRequest accountRequest){
+    public RedirectView addAccount(AccountRequest accountRequest){
         return accountService.createAccount(accountRequest);
-
-//        return "redirect:/dashboard";
     }
 }
