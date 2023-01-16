@@ -2,6 +2,7 @@ package com.example.BankApplication.appuser;
 
 
 import com.auth0.jwt.HeaderParams;
+import com.example.BankApplication.Storage.UserStorage;
 import com.example.BankApplication.security.models.AuthenticationRequest;
 import com.example.BankApplication.security.models.AuthenticationResponse;
 import com.example.BankApplication.security.util.JwtUtil;
@@ -36,6 +37,9 @@ public class AppUserResource {
 //    @Autowired
     private final AuthenticationManager authenticationManager;
 
+//    private UserStorage userStorage;
+    public static String CURRENTUSER;
+
     public AppUserResource(AppUserService appUserService, JwtUtil jwtTokenUtil, AuthenticationManager authenticationManager) {
         this.appUserService = appUserService;
         this.jwtTokenUtil = jwtTokenUtil;
@@ -68,6 +72,8 @@ public class AppUserResource {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)      // changed from authenticate to login
     public ResponseEntity<?> createAuthenticationToken(AuthenticationRequest authenticationRequest, HttpSession session) throws Exception {
+
+        CURRENTUSER = authenticationRequest.getUsername();      //Stinky cheese
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
@@ -89,9 +95,20 @@ public class AppUserResource {
 //        response.sendRedirect("dashboard.jsp");
 //        session.setAttribute("email", authenticationRequest.getUsername());
 
-        session.setAttribute("username", authenticationRequest.getUsername());
+//        session.setAttribute("username", authenticationRequest.getUsername());
 //        session.setAttribute("username", authenticationRequest.getUsername());
 
+//        System.out.println("+++++++++" + authenticationRequest.getUsername()+ "+++++++++" );
+
+
+//        userStorage.setUser(authenticationRequest.getUsername());
+
+
+//        return "redirect:/dashboard";
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
+    }
+
+    public String getUser(){
+        return CURRENTUSER;
     }
 }

@@ -1,7 +1,7 @@
 package com.example.BankApplication.security.config;
 
 import com.example.BankApplication.appuser.AppUserService;
-import com.example.BankApplication.security.filter.JwtRequestFilter;
+//import com.example.BankApplication.security.filter.JwtRequestFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 
 import java.net.http.HttpClient;
 
@@ -24,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AppUserService appUserService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final JwtRequestFilter jwtRequestFilter;
+//    private final JwtRequestFilter jwtRequestFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -54,16 +55,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .anyRequest().authenticated()
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login", "/register/**", "/register", "/", "/dashboard", "/dashboard/add-account").permitAll()
+                .antMatchers("/login", "/register/**", "/register", "/", "/dashboard").permitAll();
 
-                .and()
+//                , "/dashboard/add-account"
+
+//                .anyRequest().authenticated()
+//                .and()
 //                .exceptionHandling().and()
-                .formLogin()
-                .loginPage("/login").defaultSuccessUrl("/dashboard")
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // make sure this filter is called before UsernamePasswordAuthen...
+//                .formLogin()
+//                .loginPage("/login").defaultSuccessUrl("/dashboard");
+//                .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // make sure this filter is called before UsernamePasswordAuthen...
 
 
 //        http.csrf().disable();
@@ -128,4 +132,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         provider.setUserDetailsService(appUserService);
         return provider;
     }
+
+    @Bean
+    public SecurityContextHolderAwareRequestFilter securityContextHolderAwareRequestFilter() {
+        return new SecurityContextHolderAwareRequestFilter();
+    }
 }
+

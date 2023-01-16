@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 @NoArgsConstructor
 @Getter
 public class AuthenticationRequest {
-    private String username;
+    public String username;
     private String password;
 //    public AuthenticationRequest() {
 //    }

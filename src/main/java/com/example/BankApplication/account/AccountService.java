@@ -1,15 +1,24 @@
 package com.example.BankApplication.account;
 
+import com.example.BankApplication.Storage.UserStorage;
 import com.example.BankApplication.appuser.AppUser;
+import com.example.BankApplication.appuser.AppUserResource;
 import com.example.BankApplication.appuser.AppUserService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import javax.security.auth.login.AccountNotFoundException;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.Optional;
 
 @Service
@@ -18,6 +27,8 @@ import java.util.Optional;
 public class AccountService {
     private final AccountRepository accountRepository;
     private final AppUserService appUserService;
+    private UserStorage userStorage;
+    private final AppUserResource appUserResource;
 
     public Optional<Account> getByNr(Long nr){
         return accountRepository.findByNr(nr);
@@ -64,8 +75,10 @@ public class AccountService {
                         new AccountNotFoundException(String.format("Account not found!")));
     }
 
-    public String createAccount(AccountRequest accountRequest, HttpSession httpSession) {
-        String email = (String) httpSession.getAttribute("username");
+    public String createAccount(AccountRequest accountRequest) {
+//        String email = (String) httpSession.getAttribute("username");
+
+        String email = appUserResource.getUser();
 
         AppUser appUser = appUserService.findAppUserByUsername(email);
 
