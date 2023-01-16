@@ -8,18 +8,22 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.security.auth.login.AccountNotFoundException;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -99,8 +103,20 @@ public class AccountService {
 
         return new RedirectView("/dashboard");
     }
+    public List<Account> findAllAcc(AppUser appUser){
+        return accountRepository.findAllAccounts(appUser);
+    }
 
     public void saveAccount(Account account){
         accountRepository.save(account);
     }
+
+//    String username = appUserResource.getUsername();
+//    AppUser appUser = appUserService.findAppUserByUsername(username);
+//    Long id = appUser.getId();
+//
+//    @Transactional
+//    @Query("Select  from account a where a.app_user_id = :id")
+//    public List<Account> findAllAccounts(@Param("id") Long id) {
+//    }
 }

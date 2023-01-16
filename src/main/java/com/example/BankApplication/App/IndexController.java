@@ -1,11 +1,15 @@
 package com.example.BankApplication.App;
 
 import com.example.BankApplication.account.Account;
+import com.example.BankApplication.account.AccountRepository;
 import com.example.BankApplication.account.AccountService;
 import com.example.BankApplication.appuser.AppUser;
 import com.example.BankApplication.appuser.AppUserResource;
 import com.example.BankApplication.appuser.AppUserService;
 import lombok.AllArgsConstructor;
+import net.bytebuddy.TypeCache;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,6 +26,7 @@ public class IndexController {
     private final AppUserService appUserService;
     private final AppUserResource appUserResource;
     private final AccountService accountService;
+    private final AccountRepository accountRepository;
 
     @GetMapping("/")
     public ModelAndView getIndex(){
@@ -64,15 +69,9 @@ public class IndexController {
 
         AppUser appUser = appUserService.findAppUserByUsername(appUserResource.getUsername());
 
-        try {
-            Account getUserAccount = accountService.findAccountByAppUser(appUser);
-            List<Account> accounts = Arrays.asList(getUserAccount);
-            getDashboardPage.addObject("userAccounts", accounts);
+        List<Account> accounts = accountService.findAllAcc(appUser);
 
-        } catch (AccountNotFoundException e) {
-            return getDashboardPage;
-        }
-
+        getDashboardPage.addObject("userAccounts", accounts);
 
         return getDashboardPage;
     }

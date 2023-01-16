@@ -2,10 +2,11 @@ package com.example.BankApplication.account;
 
 import com.example.BankApplication.appuser.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,4 +16,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findByAppUser(AppUser appUser);
 
     Optional<Account> findByName(String name);
+
+    @Query(value = "SELECT a from Account a where a.appUser = :appUser")
+    List<Account> findAllAccounts(AppUser appUser);
 }
