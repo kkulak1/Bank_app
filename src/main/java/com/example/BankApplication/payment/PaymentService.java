@@ -30,7 +30,11 @@ public class PaymentService {
         if (accountService.getByNr(request.getAccountNrTo()).isEmpty())
             throw new IllegalStateException("No such account nr!");
 
-        Account accountFrom = accountService.findAccountByAppUser(appUser);
+        if (accountService.getByNr(request.getBeneficiaryAccountNr()).isEmpty())
+            throw new IllegalStateException("No such account nr!");
+
+        Account accountFrom = accountService.findAccountByNr(request.getBeneficiaryAccountNr());
+        Account accountTo = accountService.findAccountByNr(request.getAccountNrTo());
 
         if (accountFrom.getBalance() < request.getPaymentAmount()){
             throw new IllegalStateException("Not enough money in account!");
@@ -44,9 +48,6 @@ public class PaymentService {
                 request.getPaymentAmount()
         );
 
-
-        Account accountTo = accountService.findAccountByNr(request.getAccountNrTo());
-
         accountFrom.setBalance(accountFrom.getBalance() - request.getPaymentAmount());
         accountTo.setBalance(accountTo.getBalance() + request.getPaymentAmount());
 
@@ -55,5 +56,12 @@ public class PaymentService {
         savePayment(payment);
 
         return new RedirectView("/dashboard");
+    }
+
+    public String showPaymentHistory() {
+        String email = appUserResource.getUsername();
+        AppUser appUser = appUserService.findAppUserByUsername(email);
+
+        return "OK";
     }
 }

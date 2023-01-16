@@ -2,6 +2,7 @@ package com.example.BankApplication.registration;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequestMapping(path = "register")
@@ -11,7 +12,7 @@ public class RegistrationController {
     private final RegistrationService registrationService;
 
     @PostMapping
-    public String register(RegistrationRequest request) {
+    public RedirectView register(RegistrationRequest request) {
         return registrationService.register(request);
     }
 

@@ -34,10 +34,10 @@ public class DepositService {
         String email = appUserResource.getUsername();
         AppUser appUser = appUserService.findAppUserByUsername(email);
 
-        Account accountFrom = accountService.findAccountByAppUser(appUser);
-
         if (accountService.getByNr(request.getAccountNR()).isEmpty())
             throw new IllegalStateException("No such account nr!");
+
+        Account accountFrom = accountService.findAccountByNr(request.getAccountNR());
 
         Deposit deposit = new Deposit(
                 LocalDateTime.now(),
@@ -46,13 +46,10 @@ public class DepositService {
                 request.getAmountOfMoney()
         );
 
-        Account accountTo = accountService.findAccountByNr(request.getAccountNR());
-
         accountFrom.setBalance(accountFrom.getBalance() - request.getAmountOfMoney());
-        accountTo.setBalance(accountTo.getBalance() + request.getAmountOfMoney());
 
         accountService.saveAccount(accountFrom);
-        accountService.saveAccount(accountTo);
+
         saveDeposit(deposit);
 
         return new RedirectView("/dashboard");

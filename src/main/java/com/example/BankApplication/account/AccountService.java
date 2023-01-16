@@ -75,6 +75,13 @@ public class AccountService {
                         new AccountNotFoundException(String.format("Account not found!")));
     }
 
+    public Account findAccountByName(String name) throws AccountNotFoundException {
+        return accountRepository.findByName(name)
+                .orElseThrow(()->
+                        new AccountNotFoundException(String.format("Account not found!")));
+    }
+
+
     public RedirectView createAccount(AccountRequest accountRequest) {
         String email = appUserResource.getUsername();
         AppUser appUser = appUserService.findAppUserByUsername(email);
@@ -83,7 +90,9 @@ public class AccountService {
 
         Account newAccount = new Account(
                 appUser,
-                balance
+                balance,
+                accountRequest.getAccount_name(),
+                accountRequest.getAccount_type()
         );
 
         addAccount(newAccount);

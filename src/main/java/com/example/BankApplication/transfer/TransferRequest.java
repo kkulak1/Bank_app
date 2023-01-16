@@ -9,6 +9,7 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 public class TransferRequest {
-    private Long accountNR;
+    private Long accountNrFrom;
+    private Long accountNrTo;
     private Float amountOfMoney;
 }

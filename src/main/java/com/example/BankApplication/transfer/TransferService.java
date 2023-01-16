@@ -37,10 +37,14 @@ public class TransferService {
         String email = appUserResource.getUsername();
         AppUser appUser = appUserService.findAppUserByUsername(email);
 
-        if (accountService.getByNr(request.getAccountNR()).isEmpty())
+        if (accountService.getByNr(request.getAccountNrTo()).isEmpty())
             throw new IllegalStateException("No such account nr!");
 
-        Account accountFrom = accountService.findAccountByAppUser(appUser);
+        if (accountService.getByNr(request.getAccountNrFrom()).isEmpty())
+            throw new IllegalStateException("No such account nr!");
+
+        Account accountFrom = accountService.findAccountByNr(request.getAccountNrFrom());
+        Account accountTo = accountService.findAccountByNr(request.getAccountNrTo());
 
         if (accountFrom.getBalance() < request.getAmountOfMoney()){
             throw new IllegalStateException("Not enough money!");
@@ -49,11 +53,9 @@ public class TransferService {
         Transfer transfer = new Transfer(
                 LocalDateTime.now(),
                 appUser,
-                request.getAccountNR(),
+                request.getAccountNrTo(),
                 request.getAmountOfMoney()
         );
-
-        Account accountTo = accountService.findAccountByNr(request.getAccountNR());
 
         accountFrom.setBalance(accountFrom.getBalance() - request.getAmountOfMoney());
         accountTo.setBalance(accountTo.getBalance() + request.getAmountOfMoney());

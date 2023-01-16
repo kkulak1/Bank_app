@@ -88,7 +88,6 @@ public class AppUserResource {
 
         final String jwt = jwtTokenUtil.generateToken(userDetails);
 
-//        return "redirect:/dashboard";
 //        return ResponseEntity.ok(new AuthenticationResponse(jwt));
         return new RedirectView("/dashboard");
     }

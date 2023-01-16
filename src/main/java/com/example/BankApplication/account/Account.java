@@ -24,6 +24,10 @@ public class Account {
             generator = "account_sequence"
     )
     private Long id;
+    @Column(nullable = false)
+    private String name;
+    @Column(nullable = false)
+    private String type;
 
     @Column(nullable = false)
     private Long nr;
@@ -36,7 +40,9 @@ public class Account {
     )
     private AppUser appUser;
 
-    public Account(AppUser appUser, float balance) {
+    public Account(AppUser appUser, float balance,String name, String type) {
+        this.name = name;
+        this.type = type;
         this.appUser = appUser;
         this.balance = balance;
     }

@@ -11,6 +11,7 @@ import com.example.BankApplication.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDateTime;
 
@@ -24,7 +25,7 @@ public class RegistrationService {
     private final EmailSender emailSender;
     private final AccountService accountService;
 
-    public String register(RegistrationRequest request) {
+    public RedirectView register(RegistrationRequest request) {
         boolean isValidEmail = emailValidator.
                 test(request.getEmail());
 
@@ -45,10 +46,14 @@ public class RegistrationService {
         );
 
         float balance = 0.0F;
+        String name = "Initial";
+        String type = "Business";
 
         Account newAccount = new Account(
                 newAppUser,
-                balance
+                balance,
+                name + newAppUser.getId().toString(),
+                type
         );
 
         accountService.addAccount(newAccount);
@@ -58,7 +63,7 @@ public class RegistrationService {
                 request.getEmail(),
                 buildEmail(request.getFirstName(), link));
 
-        return token;
+        return new RedirectView("/");
 //        return redirect
     }
 
