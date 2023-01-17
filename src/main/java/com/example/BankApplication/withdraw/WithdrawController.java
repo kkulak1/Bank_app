@@ -16,7 +16,7 @@ public class WithdrawController {
     private final WithdrawService withdrawService;
 
     @PostMapping
-    public RedirectView sendWithdraw(@RequestBody WithdrawRequest request) throws AccountNotFoundException {
+    public RedirectView sendWithdraw(WithdrawRequest request) throws AccountNotFoundException {
         return withdrawService.withdraw(request);
     }
 }

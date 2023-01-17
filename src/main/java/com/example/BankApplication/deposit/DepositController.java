@@ -16,7 +16,7 @@ public class DepositController {
     private final DepositService depositService;
 
     @PostMapping
-    public RedirectView sendDeposit(@RequestBody DepositRequest request) throws AccountNotFoundException {
+    public RedirectView sendDeposit(DepositRequest request) throws AccountNotFoundException {
         return depositService.deposit(request);
     }
 }

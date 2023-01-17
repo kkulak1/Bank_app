@@ -46,7 +46,7 @@ public class DepositService {
                 request.getAmountOfMoney()
         );
 
-        accountFrom.setBalance(accountFrom.getBalance() - request.getAmountOfMoney());
+        accountFrom.setBalance(accountFrom.getBalance() + request.getAmountOfMoney());
 
         accountService.saveAccount(accountFrom);
 

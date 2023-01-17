@@ -66,31 +66,43 @@
         <div class="card transfer-card">
             <div class="card-body">
 
-
+            <form action="/transfer" method="POST">
                 <div class="form-group">
                     <label for="">Select account</label>
                     <!--select account option-->
-                    <select name="accoount_id" class="form-control" id="">
-                        <option value="">-- Select account --</option>
+                    <select name="accountNrFrom" class="form-control" id="">
+                        <option value="">-- Select Account --</option>
+                        <c:if test="${userAccounts != null}">
+                            <c:forEach items="${userAccounts}" var="selectAccount">
+                                <option value="${selectAccount.nr}">${selectAccount.name}</option>
+                            </c:forEach>
+                        </c:if>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="">Select account</label>
                     <!--select account option-->
-                    <select name="accoount_id" class="form-control" id="">
-                        <option value="">-- Select account --</option>
+                    <select name="accountNrTo" class="form-control" id="">
+                        <option value="">-- Select Account --</option>
+                        <c:if test="${userAccounts != null}">
+                            <c:forEach items="${userAccounts}" var="selectAccount">
+                                <option value="${selectAccount.nr}">${selectAccount.name}</option>
+                            </c:forEach>
+                        </c:if>
                     </select>
                 </div>
 
                 <div class="form-group mb-2">
                     <label for="">Enter transfer amount</label>
-                    <input type="text" name="transfer_amount" class="form-control" placeholder="Enter transfer amount">
+                    <input type="text" name="amountOfMoney" class="form-control" placeholder="Enter transfer amount">
                 </div>
 
                 <div class="form-group mb-2">
                     <button id="" class="btn btn-md transact-btn">Transfer</button>
                 </div>
+
+            </form>
 
             </div>
         </div>
@@ -103,19 +115,24 @@
         <div class="card deposit-card">
             <div class="card-body">
                 <!--deposit form-->
-                <form action="" class="deposit-form">
+                <form action="/deposit" method="POST" class="deposit-form">
 
                     <div class="form-group mb-2">
                         <label for="">Enter deposit amount</label>
-                        <input type="text" name="deposit_amount" class="form-control" placeholder="Enter deposit amount">
+                        <input type="text" name="amountOfMoney" class="form-control" placeholder="Enter deposit amount">
                     </div>
 
 
                     <div class="form-group">
                         <label for="">Select account</label>
                         <!--select account option-->
-                        <select name="accoount_id" class="form-control" id="">
-                            <option value="">-- Select account --</option>
+                        <select name="accountNR" class="form-control" id="">
+                            <option value="">-- Select Account --</option>
+                            <c:if test="${userAccounts != null}">
+                                <c:forEach items="${userAccounts}" var="selectAccount">
+                                    <option value="${selectAccount.nr}">${selectAccount.name}</option>
+                                </c:forEach>
+                            </c:if>
                         </select>
                     </div>
 
@@ -131,20 +148,25 @@
         <!--Withdraw card -->
         <div class="card withdraw-card">
             <div class="card-body">
-                <!--deposit form-->
-                <form action="" class="deposit-form">
+                <!--withdraw form-->
+                <form action="/withdraw" method="POST" class="withdraw-form">
 
                     <div class="form-group mb-2">
                         <label for="">Enter withdrawal amount</label>
-                        <input type="text" name="withdrawal_amount" class="form-control" placeholder="Enter withdrawal amount">
+                        <input type="text" name="amountOfMoney" class="form-control" placeholder="Enter withdrawal amount">
                     </div>
 
 
                     <div class="form-group">
                         <label for="">Select account</label>
                         <!--select account option-->
-                        <select name="accoount_id" class="form-control" id="">
-                            <option value="">-- Select account --</option>
+                        <select name="accountNR" class="form-control" id="">
+                            <option value="">-- Select Account --</option>
+                            <c:if test="${userAccounts != null}">
+                                <c:forEach items="${userAccounts}" var="selectAccount">
+                                    <option value="${selectAccount.nr}">${selectAccount.name}</option>
+                                </c:forEach>
+                            </c:if>
                         </select>
                     </div>
 

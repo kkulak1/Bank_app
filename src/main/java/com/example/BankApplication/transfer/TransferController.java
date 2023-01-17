@@ -16,7 +16,7 @@ public class TransferController {
     private final TransferService transferService;
 
     @PostMapping
-    public RedirectView sendTransfer(@RequestBody TransferRequest request) throws AccountNotFoundException {
+    public RedirectView sendTransfer(TransferRequest request) throws AccountNotFoundException {
         return transferService.transfer(request);
     }
 }
