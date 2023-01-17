@@ -87,10 +87,12 @@ public class IndexController {
 
         getDashboardPage.addObject("totalBalance", totalAccountsBalance);
 
+        getDashboardPage.addObject("appUser", appUser);
+
         return getDashboardPage;
     }
 
-    @GetMapping("/dashboard/paymnet-history")
+    @GetMapping("/dashboard/payment-history")
     public ModelAndView getPaymentHistory(HttpSession session) {
         ModelAndView getDashboardPage = new ModelAndView("payment-history");
         System.out.println("In Payment History Controller");
@@ -128,6 +130,7 @@ public class IndexController {
     public String logout(HttpSession session, RedirectAttributes redirectAttributes){
         session.invalidate();
         redirectAttributes.addFlashAttribute("logged_out", "Logged out successfully");
+
         return "redirect:/login";
     }
 }

@@ -10,12 +10,12 @@
             BANK
         </div>
         <nav class="navigation">
-            <li><a href="">Dashboard</a></li>
-            <li><a href="">Payment History</a></li>
-            <li><a href="">Transaction History</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/dashboard/payment-history">Payment History</a></li>
+            <li><a href="/dashboard/transaction-history">Transaction History</a></li>
         </nav>
         <div class="display-name ms-auto text-white">
-            <i class="fa fa-circle text-success me-2"></i> Welcome <span>Marcin Gorski</span>
+            <i class="fa fa-circle text-success me-2"></i> Welcome <span>${appUser.firstName}  ${appUser.lastName}</span>
         </div>
         <a href="/logout" class="btn btn-sm text-white ms-2">
             <i class="fa fa-sign-out"></i> Sign out
