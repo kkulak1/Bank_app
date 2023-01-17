@@ -38,6 +38,7 @@ public class IndexController {
     private final TransferService transferService;
     private final WithdrawService withdrawService;
     private final DepositService depositService;
+    private final AccountRepository accountRepository;
 
     @GetMapping("/")
     public ModelAndView getIndex(){
