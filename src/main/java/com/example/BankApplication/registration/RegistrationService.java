@@ -45,18 +45,18 @@ public class RegistrationService {
                 newAppUser
         );
 
-        float balance = 0.0F;
-        String name = "Initial_";
-        String type = "Business";
-
-        Account newAccount = new Account(
-                newAppUser,
-                balance,
-                name + newAppUser.getId().toString(),
-                type
-        );
-
-        accountService.addAccount(newAccount);
+//        float balance = 0.0F;
+//        String name = "Initial_";
+//        String type = "Business";
+//
+//        Account newAccount = new Account(
+//                newAppUser,
+//                balance,
+//                name + newAppUser.getId().toString(),
+//                type
+//        );
+//
+//        accountService.addAccount(newAccount);
 
         String link = "http://localhost:8080/register/confirm?token=" + token;
         emailSender.send(

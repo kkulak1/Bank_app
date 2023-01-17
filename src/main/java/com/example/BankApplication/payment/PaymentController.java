@@ -13,7 +13,7 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping
-    public RedirectView doPayment(@RequestBody PaymentRequest request) throws AccountNotFoundException {
+    public RedirectView doPayment(PaymentRequest request) throws AccountNotFoundException {
         return paymentService.payment(request);
     }
 
