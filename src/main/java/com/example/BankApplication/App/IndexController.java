@@ -6,6 +6,14 @@ import com.example.BankApplication.account.AccountService;
 import com.example.BankApplication.appuser.AppUser;
 import com.example.BankApplication.appuser.AppUserResource;
 import com.example.BankApplication.appuser.AppUserService;
+import com.example.BankApplication.deposit.Deposit;
+import com.example.BankApplication.deposit.DepositService;
+import com.example.BankApplication.payment.Payment;
+import com.example.BankApplication.payment.PaymentService;
+import com.example.BankApplication.transfer.Transfer;
+import com.example.BankApplication.transfer.TransferService;
+import com.example.BankApplication.withdraw.Withdraw;
+import com.example.BankApplication.withdraw.WithdrawService;
 import lombok.AllArgsConstructor;
 import net.bytebuddy.TypeCache;
 import org.springframework.data.domain.Sort;
@@ -18,7 +26,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.security.auth.login.AccountNotFoundException;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 
 @AllArgsConstructor
@@ -27,7 +34,10 @@ public class IndexController {
     private final AppUserService appUserService;
     private final AppUserResource appUserResource;
     private final AccountService accountService;
-    private final AccountRepository accountRepository;
+    private final PaymentService paymentService;
+    private final TransferService transferService;
+    private final WithdrawService withdrawService;
+    private final DepositService depositService;
 
     @GetMapping("/")
     public ModelAndView getIndex(){
@@ -69,14 +79,46 @@ public class IndexController {
 
 
         AppUser appUser = appUserService.findAppUserByUsername(appUserResource.getUsername());
-
         List<Account> accounts = accountService.findAllAcc(appUser);
-
         getDashboardPage.addObject("userAccounts", accounts);
 
         BigDecimal totalAccountsBalance = accountRepository.getTotalBalance(appUser);
 
         getDashboardPage.addObject("totalBalance", totalAccountsBalance);
+
+        return getDashboardPage;
+    }
+
+    @GetMapping("/dashboard/paymnet-history")
+    public ModelAndView getPaymentHistory(HttpSession session) {
+        ModelAndView getDashboardPage = new ModelAndView("payment-history");
+        System.out.println("In Payment History Controller");
+        getDashboardPage.addObject("PageTitle", "Payment History");
+
+
+        AppUser appUser = appUserService.findAppUserByUsername(appUserResource.getUsername());
+        List<Payment> payments = paymentService.findAllPayments(appUser);
+        getDashboardPage.addObject("userPaymentsHistory", payments);
+
+        return getDashboardPage;
+    }
+
+    @GetMapping("/dashboard/transaction-history")
+    public ModelAndView getTransactionHistory(HttpSession session) {
+        ModelAndView getDashboardPage = new ModelAndView("transaction-history");
+        System.out.println("In Transaction History Controller");
+        getDashboardPage.addObject("PageTitle", "Transaction History");
+
+
+        AppUser appUser = appUserService.findAppUserByUsername(appUserResource.getUsername());
+        List<Transfer> transfers = transferService.findAllTransfers(appUser);
+
+        List<Payment> payments = paymentService.findAllPayments(appUser);
+
+        List<Withdraw> withdraws = withdrawService.findAllWithdraws(appUser);
+        List<Deposit> deposits = depositService.findAllDeposits(appUser);
+
+        getDashboardPage.addObject("userTransactionsHistory", transfers);
 
         return getDashboardPage;
     }

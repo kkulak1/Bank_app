@@ -1,9 +1,11 @@
 package com.example.BankApplication.payment;
 
 import com.example.BankApplication.account.Account;
+import com.example.BankApplication.appuser.AppUser;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -37,12 +39,23 @@ public class Payment {
     private String reference;
     @Column(nullable = false)
     private Long paymentAmount;
+    @ManyToOne
+    @JoinColumn(
+            nullable = false,
+            name = "app_user_id"
+    )
+    private AppUser appUserFrom;
 
-    public Payment(String beneficiary, Long beneficiaryAccountNr, Long accountNrTo, String reference, Long paymentAmount) {
+    @Column(nullable = false)
+    private LocalDateTime currentPaymentDate;
+
+    public Payment(String beneficiary, Long beneficiaryAccountNr, Long accountNrTo, String reference, Long paymentAmount, AppUser appUser, LocalDateTime date) {
         this.beneficiary = beneficiary;
         this.beneficiaryAccountNr = beneficiaryAccountNr;
         this.accountNrTo = accountNrTo;
         this.reference = reference;
         this.paymentAmount = paymentAmount;
+        this.appUserFrom = appUser;
+        this.currentPaymentDate = date;
     }
 }

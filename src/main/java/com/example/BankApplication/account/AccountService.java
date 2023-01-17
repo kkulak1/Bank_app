@@ -110,13 +110,4 @@ public class AccountService {
     public void saveAccount(Account account){
         accountRepository.save(account);
     }
-
-//    String username = appUserResource.getUsername();
-//    AppUser appUser = appUserService.findAppUserByUsername(username);
-//    Long id = appUser.getId();
-//
-//    @Transactional
-//    @Query("Select  from account a where a.app_user_id = :id")
-//    public List<Account> findAllAccounts(@Param("id") Long id) {
-//    }
 }

@@ -12,6 +12,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.security.auth.login.AccountNotFoundException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -53,5 +54,9 @@ public class DepositService {
         saveDeposit(deposit);
 
         return new RedirectView("/dashboard");
+    }
+
+    public List<Deposit> findAllDeposits(AppUser appUser) {
+        return depositRepository.findAllDeposits(appUser);
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.security.auth.login.AccountNotFoundException;
 import java.time.LocalDateTime;
 import java.util.AbstractCollection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -65,6 +66,10 @@ public class TransferService {
         saveTransfer(transfer);
 
         return new RedirectView("/dashboard");
+    }
+
+    public List<Transfer> findAllTransfers(AppUser appUser) {
+        return transferRepository.findAllTransfers(appUser);
     }
 }
 

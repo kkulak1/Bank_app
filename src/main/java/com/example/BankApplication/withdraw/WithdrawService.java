@@ -12,6 +12,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.security.auth.login.AccountNotFoundException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -58,5 +59,9 @@ public class WithdrawService {
         saveWithdraw(withdraw);
 
         return new RedirectView("/dashboard");
+    }
+
+    public List<Withdraw> findAllWithdraws(AppUser appUser) {
+        return withdrawRepository.findAllWithdraws(appUser);
     }
 }

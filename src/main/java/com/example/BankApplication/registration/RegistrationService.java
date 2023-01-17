@@ -46,7 +46,7 @@ public class RegistrationService {
         );
 
         float balance = 0.0F;
-        String name = "Initial";
+        String name = "Initial_";
         String type = "Business";
 
         Account newAccount = new Account(

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.security.auth.login.AccountNotFoundException;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -45,7 +47,9 @@ public class PaymentService {
                 request.getBeneficiaryAccountNr(),
                 request.getAccountNrTo(),
                 request.getReference(),
-                request.getPaymentAmount()
+                request.getPaymentAmount(),
+                appUser,
+                LocalDateTime.now()
         );
 
         accountFrom.setBalance(accountFrom.getBalance() - request.getPaymentAmount());
@@ -63,5 +67,9 @@ public class PaymentService {
         AppUser appUser = appUserService.findAppUserByUsername(email);
 
         return "OK";
+    }
+
+    public List<Payment> findAllPayments(AppUser appUser) {
+        return paymentRepository.findAllPayments(appUser);
     }
 }
