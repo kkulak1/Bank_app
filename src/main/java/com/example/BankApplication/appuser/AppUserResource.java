@@ -80,7 +80,8 @@ public class AppUserResource {
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
             );
         } catch (BadCredentialsException e) {
-            throw new Exception("Incorrect username or password", e);
+//            throw new Exception("Incorrect username or password", e);
+            return new RedirectView("/login");
         }
 
         final UserDetails userDetails = appUserService

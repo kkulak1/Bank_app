@@ -34,7 +34,7 @@ public class Payment {
 //            name = "account_id"
 //    )
     @Column(nullable = false)
-    private Long accountNrTo;
+    private Long accountNrFrom;
     @Column(nullable = false)
     private String reference;
     @Column(nullable = false)
@@ -49,10 +49,10 @@ public class Payment {
     @Column(nullable = false)
     private LocalDateTime currentPaymentDate;
 
-    public Payment(String beneficiary, Long beneficiaryAccountNr, Long accountNrTo, String reference, Long paymentAmount, AppUser appUser, LocalDateTime date) {
+    public Payment(String beneficiary, Long beneficiaryAccountNr, Long accountNrFrom, String reference, Long paymentAmount, AppUser appUser, LocalDateTime date) {
         this.beneficiary = beneficiary;
         this.beneficiaryAccountNr = beneficiaryAccountNr;
-        this.accountNrTo = accountNrTo;
+        this.accountNrFrom = accountNrFrom;
         this.reference = reference;
         this.paymentAmount = paymentAmount;
         this.appUserFrom = appUser;

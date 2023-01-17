@@ -29,14 +29,14 @@ public class PaymentService {
         String email = appUserResource.getUsername();
         AppUser appUser = appUserService.findAppUserByUsername(email);
 
-        if (accountService.getByNr(request.getAccountNrTo()).isEmpty())
+        if (accountService.getByNr(request.getAccountNrFrom()).isEmpty())
             throw new IllegalStateException("No such account nr!");
 
         if (accountService.getByNr(request.getBeneficiaryAccountNr()).isEmpty())
             throw new IllegalStateException("No such account nr!");
 
-        Account accountFrom = accountService.findAccountByNr(request.getBeneficiaryAccountNr());
-        Account accountTo = accountService.findAccountByNr(request.getAccountNrTo());
+        Account accountFrom = accountService.findAccountByNr(request.getAccountNrFrom());
+        Account accountBeneficiary = accountService.findAccountByNr(request.getBeneficiaryAccountNr());
 
         if (accountFrom.getBalance() < request.getPaymentAmount()){
             throw new IllegalStateException("Not enough money in account!");
@@ -45,7 +45,7 @@ public class PaymentService {
         Payment payment = new Payment(
                 request.getBeneficiary(),
                 request.getBeneficiaryAccountNr(),
-                request.getAccountNrTo(),
+                request.getAccountNrFrom(),
                 request.getReference(),
                 request.getPaymentAmount(),
                 appUser,
@@ -53,10 +53,10 @@ public class PaymentService {
         );
 
         accountFrom.setBalance(accountFrom.getBalance() - request.getPaymentAmount());
-        accountTo.setBalance(accountTo.getBalance() + request.getPaymentAmount());
+        accountBeneficiary.setBalance(accountBeneficiary.getBalance() + request.getPaymentAmount());
 
         accountService.saveAccount(accountFrom);
-        accountService.saveAccount(accountTo);
+        accountService.saveAccount(accountBeneficiary);
         savePayment(payment);
 
         return new RedirectView("/dashboard");

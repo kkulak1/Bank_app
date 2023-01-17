@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 public class PaymentRequest {
     private Long beneficiaryAccountNr;
     private String beneficiary;
-    private Long accountNrTo;
+    private Long accountNrFrom;
     private String reference;
     private Long paymentAmount;
 }
