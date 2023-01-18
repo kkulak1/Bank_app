@@ -38,22 +38,22 @@
                 <table class="table text-center table-striped">
                     <tr>
                         <th>Transaction ID</th>
+                        <th>Account From Number</th>
                         <th>Transaction Type</th>
                         <th>Amount</th>
-                        <th>Source</th>
                         <th>Status</th>
                         <th>Reason Code</th>
                         <th>Created at</th>
                     </tr>
                     <c:forEach items="${requestScope.userTransactionsHistory}" var="transactionHistory">
                         <tr>
-                            <td>${transactionHistory.transaction_id}</td>
-                            <td>${transactionHistory.transaction_type}</td>
-                            <td>${transactionHistory.amount}</td>
-                            <td>${transactionHistory.source}</td>
+                            <td>${transactionHistory.id}</td>
+                            <td>${transactionHistory.accountNrFrom}</td>
+                            <td>${transactionHistory.transactionType}</td>
+                            <td>${transactionHistory.paymentAmount}</td>
                             <td>${transactionHistory.status}</td>
-                            <td>${transactionHistory.reason_code}</td>
-                            <td>${transactionHistory.created_at}</td>
+                            <td>${transactionHistory.reasonCode}</td>
+                            <td>${transactionHistory.currentTransactionDate}</td>
                         </tr>
                     </c:forEach>
                 </table>

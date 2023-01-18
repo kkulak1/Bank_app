@@ -10,6 +10,8 @@ import com.example.BankApplication.deposit.Deposit;
 import com.example.BankApplication.deposit.DepositService;
 import com.example.BankApplication.payment.Payment;
 import com.example.BankApplication.payment.PaymentService;
+import com.example.BankApplication.transactionHistory.TransactionHistory;
+import com.example.BankApplication.transactionHistory.TransactionHistoryRepository;
 import com.example.BankApplication.transfer.Transfer;
 import com.example.BankApplication.transfer.TransferService;
 import com.example.BankApplication.withdraw.Withdraw;
@@ -41,6 +43,7 @@ public class IndexController {
     private final WithdrawService withdrawService;
     private final DepositService depositService;
     private final AccountRepository accountRepository;
+    private final TransactionHistoryRepository transactionHistoryRepository;
 
     @GetMapping("/")
     public ModelAndView getIndex(){
@@ -119,14 +122,11 @@ public class IndexController {
 
 
         AppUser appUser = appUserService.findAppUserByUsername(appUserResource.getUsername());
-        List<Transfer> transfers = transferService.findAllTransfers(appUser);
 
-        List<Payment> payments = paymentService.findAllPayments(appUser);
+        List<TransactionHistory> transactionsHistory = transactionHistoryRepository.findAllTransactions(appUser);
 
-        List<Withdraw> withdraws = withdrawService.findAllWithdraws(appUser);
-        List<Deposit> deposits = depositService.findAllDeposits(appUser);
 
-        getDashboardPage.addObject("userTransactionsHistory", transfers);
+        getDashboardPage.addObject("userTransactionsHistory", transactionsHistory);
         getDashboardPage.addObject("appUser", appUser);
 
         return getDashboardPage;
