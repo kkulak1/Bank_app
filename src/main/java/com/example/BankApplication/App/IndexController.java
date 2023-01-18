@@ -97,7 +97,7 @@ public class IndexController {
 
     @GetMapping("/dashboard/payment-history")
     public ModelAndView getPaymentHistory(HttpSession session) {
-        ModelAndView getDashboardPage = new ModelAndView("payment-history");
+        ModelAndView getDashboardPage = new ModelAndView("paymentHistory");
         System.out.println("In Payment History Controller");
         getDashboardPage.addObject("PageTitle", "Payment History");
 
@@ -105,13 +105,14 @@ public class IndexController {
         AppUser appUser = appUserService.findAppUserByUsername(appUserResource.getUsername());
         List<Payment> payments = paymentService.findAllPayments(appUser);
         getDashboardPage.addObject("userPaymentsHistory", payments);
+        getDashboardPage.addObject("appUser", appUser);
 
         return getDashboardPage;
     }
 
     @GetMapping("/dashboard/transaction-history")
     public ModelAndView getTransactionHistory(HttpSession session) {
-        ModelAndView getDashboardPage = new ModelAndView("transaction-history");
+        ModelAndView getDashboardPage = new ModelAndView("transactHistory");
         System.out.println("In Transaction History Controller");
         getDashboardPage.addObject("PageTitle", "Transaction History");
 
@@ -125,6 +126,7 @@ public class IndexController {
         List<Deposit> deposits = depositService.findAllDeposits(appUser);
 
         getDashboardPage.addObject("userTransactionsHistory", transfers);
+        getDashboardPage.addObject("appUser", appUser);
 
         return getDashboardPage;
     }
