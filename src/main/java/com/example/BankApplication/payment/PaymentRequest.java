@@ -18,5 +18,5 @@ public class PaymentRequest {
     private String beneficiary;
     private Long accountNrFrom;
     private String reference;
-    private Long paymentAmount;
+    private String paymentAmount;
 }

@@ -11,5 +11,5 @@ import lombok.*;
 public class TransferRequest {
     private Long accountNrFrom;
     private Long accountNrTo;
-    private Float amountOfMoney;
+    private String amountOfMoney;
 }

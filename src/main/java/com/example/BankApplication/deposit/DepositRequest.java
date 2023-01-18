@@ -10,5 +10,5 @@ import lombok.*;
 @ToString
 public class DepositRequest {
     private Long accountNR;
-    private Float amountOfMoney;
+    private String amountOfMoney;
 }

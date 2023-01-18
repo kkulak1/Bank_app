@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.security.auth.login.AccountNotFoundException;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -38,7 +39,9 @@ public class PaymentService {
         Account accountFrom = accountService.findAccountByNr(request.getAccountNrFrom());
         Account accountBeneficiary = accountService.findAccountByNr(request.getBeneficiaryAccountNr());
 
-        if (accountFrom.getBalance() < request.getPaymentAmount()){
+        double money = Double.parseDouble((request.getPaymentAmount()));
+
+        if (accountFrom.getBalance().compareTo(BigDecimal.valueOf(money)) < 0){
             throw new IllegalStateException("Not enough money in account!");
         }
 
@@ -47,13 +50,13 @@ public class PaymentService {
                 request.getBeneficiaryAccountNr(),
                 request.getAccountNrFrom(),
                 request.getReference(),
-                request.getPaymentAmount(),
+                money,
                 appUser,
                 LocalDateTime.now()
         );
 
-        accountFrom.setBalance(accountFrom.getBalance() - request.getPaymentAmount());
-        accountBeneficiary.setBalance(accountBeneficiary.getBalance() + request.getPaymentAmount());
+        accountFrom.setBalance(accountFrom.getBalance().subtract(BigDecimal.valueOf(money)));
+        accountBeneficiary.setBalance(accountBeneficiary.getBalance().add(BigDecimal.valueOf(money)));
 
         accountService.saveAccount(accountFrom);
         accountService.saveAccount(accountBeneficiary);

@@ -22,6 +22,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.security.auth.login.AccountNotFoundException;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -51,7 +52,6 @@ public class AccountService {
     public Long generateAccountNr(){
         StringBuilder generatedNr = new StringBuilder();
 
-//        TODO: check if number already in database
         boolean isInDatabase = true;
 
         while (isInDatabase) {
@@ -90,7 +90,7 @@ public class AccountService {
         String email = appUserResource.getUsername();
         AppUser appUser = appUserService.findAppUserByUsername(email);
 
-        float balance = 0.0F;
+        BigDecimal balance = BigDecimal.valueOf(0.0);
 
         Account newAccount = new Account(
                 appUser,

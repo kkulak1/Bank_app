@@ -26,6 +26,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.security.auth.login.AccountNotFoundException;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.List;
 
 @AllArgsConstructor
@@ -81,10 +83,11 @@ public class IndexController {
 
         AppUser appUser = appUserService.findAppUserByUsername(appUserResource.getUsername());
         List<Account> accounts = accountService.findAllAcc(appUser);
+
         getDashboardPage.addObject("userAccounts", accounts);
 
         BigDecimal totalAccountsBalance = accountRepository.getTotalBalance(appUser);
-
+        totalAccountsBalance = totalAccountsBalance.setScale(2, RoundingMode.DOWN);
         getDashboardPage.addObject("totalBalance", totalAccountsBalance);
 
         getDashboardPage.addObject("appUser", appUser);

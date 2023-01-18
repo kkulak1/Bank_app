@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.security.auth.login.AccountNotFoundException;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -44,10 +45,14 @@ public class DepositService {
                 LocalDateTime.now(),
                 appUser,
                 request.getAccountNR(),
-                request.getAmountOfMoney()
+                Double.parseDouble(request.getAmountOfMoney())
         );
 
-        accountFrom.setBalance(accountFrom.getBalance() + request.getAmountOfMoney());
+
+        BigDecimal currentBalance = accountFrom.getBalance();
+        BigDecimal money = BigDecimal.valueOf(deposit.getAmountOfMoney());
+
+        accountFrom.setBalance(currentBalance.add(money));
 
         accountService.saveAccount(accountFrom);
 

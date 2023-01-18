@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.security.auth.login.AccountNotFoundException;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -39,20 +40,21 @@ public class WithdrawService {
         if (accountService.getByNr(request.getAccountNR()).isEmpty())
             throw new IllegalStateException("No such account nr!");
 
+        Account accountFrom = accountService.findAccountByNr(request.getAccountNR());
+
+        double money = Double.parseDouble(request.getAmountOfMoney());
+
+        if (accountFrom.getBalance().compareTo(BigDecimal.valueOf(money)) < 0)
+            throw new IllegalStateException("Not enough money in account!");
 
         Withdraw withdraw = new Withdraw(
                 LocalDateTime.now(),
                 appUser,
                 request.getAccountNR(),
-                request.getAmountOfMoney()
+                money
         );
 
-        Account accountFrom = accountService.findAccountByNr(request.getAccountNR());
-
-        if (accountFrom.getBalance() < request.getAmountOfMoney())
-            throw new IllegalStateException("Not enough money in account!");
-
-        accountFrom.setBalance(accountFrom.getBalance() - request.getAmountOfMoney());
+        accountFrom.setBalance(accountFrom.getBalance().subtract(BigDecimal.valueOf(money)));
 
         accountService.saveAccount(accountFrom);
 

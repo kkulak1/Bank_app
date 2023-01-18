@@ -33,7 +33,7 @@ public class Deposit {
     @Column(nullable = false)
     private Long accountNR;
     @Column(nullable = false)
-    private Float amountOfMoney;
+    private Double amountOfMoney;
 
     @ManyToOne
     @JoinColumn(
@@ -42,7 +42,7 @@ public class Deposit {
     )
     private AppUser appUserFrom;
 
-    public Deposit(LocalDateTime date, AppUser appUserFrom, Long accountNrTo, float amountOfMoney) {
+    public Deposit(LocalDateTime date, AppUser appUserFrom, Long accountNrTo, Double amountOfMoney) {
         this.currentDepositDate = date;
         this.appUserFrom = appUserFrom;
         this.accountNR = accountNrTo;

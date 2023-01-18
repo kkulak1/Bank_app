@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.security.auth.login.AccountNotFoundException;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.AbstractCollection;
 import java.util.List;
@@ -47,7 +48,9 @@ public class TransferService {
         Account accountFrom = accountService.findAccountByNr(request.getAccountNrFrom());
         Account accountTo = accountService.findAccountByNr(request.getAccountNrTo());
 
-        if (accountFrom.getBalance() < request.getAmountOfMoney()){
+        double money = Double.parseDouble((request.getAmountOfMoney()));
+
+        if (accountFrom.getBalance().compareTo(BigDecimal.valueOf(money)) < 0){
             throw new IllegalStateException("Not enough money!");
         }
 
@@ -55,11 +58,11 @@ public class TransferService {
                 LocalDateTime.now(),
                 appUser,
                 request.getAccountNrTo(),
-                request.getAmountOfMoney()
+                money
         );
 
-        accountFrom.setBalance(accountFrom.getBalance() - request.getAmountOfMoney());
-        accountTo.setBalance(accountTo.getBalance() + request.getAmountOfMoney());
+        accountFrom.setBalance(accountFrom.getBalance().subtract(BigDecimal.valueOf(money)));
+        accountTo.setBalance(accountTo.getBalance().add(BigDecimal.valueOf(money)));
 
         accountService.saveAccount(accountFrom);
         accountService.saveAccount(accountTo);

@@ -33,7 +33,7 @@ public class Withdraw {
     @Column(nullable = false)
     private Long accountNR;
     @Column(nullable = false)
-    private Float amountOfMoney;
+    private Double amountOfMoney;
 
     @ManyToOne
     @JoinColumn(
@@ -42,7 +42,7 @@ public class Withdraw {
     )
     private AppUser appUserFrom;
 
-    public Withdraw(LocalDateTime date, AppUser appUserFrom, Long accountNrFrom, float amountOfMoney) {
+    public Withdraw(LocalDateTime date, AppUser appUserFrom, Long accountNrFrom, double amountOfMoney) {
         this.currentWithdrawDate = date;
         this.appUserFrom = appUserFrom;
         this.accountNR = accountNrFrom;

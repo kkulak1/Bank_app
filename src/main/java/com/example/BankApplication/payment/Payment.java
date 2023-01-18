@@ -38,7 +38,7 @@ public class Payment {
     @Column(nullable = false)
     private String reference;
     @Column(nullable = false)
-    private Long paymentAmount;
+    private Double paymentAmount;
     @ManyToOne
     @JoinColumn(
             nullable = false,
@@ -49,7 +49,7 @@ public class Payment {
     @Column(nullable = false)
     private LocalDateTime currentPaymentDate;
 
-    public Payment(String beneficiary, Long beneficiaryAccountNr, Long accountNrFrom, String reference, Long paymentAmount, AppUser appUser, LocalDateTime date) {
+    public Payment(String beneficiary, Long beneficiaryAccountNr, Long accountNrFrom, String reference, Double paymentAmount, AppUser appUser, LocalDateTime date) {
         this.beneficiary = beneficiary;
         this.beneficiaryAccountNr = beneficiaryAccountNr;
         this.accountNrFrom = accountNrFrom;

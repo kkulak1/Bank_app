@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Getter
 @Setter
@@ -32,7 +34,7 @@ public class Account {
     @Column(nullable = false)
     private Long nr;
     @Column(nullable = false)
-    private float balance=0;
+    private BigDecimal balance;
     @OneToOne
     @JoinColumn(
             nullable = false,
@@ -40,11 +42,15 @@ public class Account {
     )
     private AppUser appUser;
 
-    public Account(AppUser appUser, float balance,String name, String type) {
+    public Account(AppUser appUser, BigDecimal balance,String name, String type) {
         this.name = name;
         this.type = type;
         this.appUser = appUser;
         this.balance = balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance.setScale(2, RoundingMode.DOWN);
     }
 }
 
