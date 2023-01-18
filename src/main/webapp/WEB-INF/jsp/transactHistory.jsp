@@ -37,8 +37,7 @@
             <c:if test="${requestScope.userTransactionsHistory != null}">
                 <table class="table text-center table-striped">
                     <tr>
-                        <th>Transaction ID</th>
-                        <th>Account From Number</th>
+                        <th>Account Number From</th>
                         <th>Transaction Type</th>
                         <th>Amount</th>
                         <th>Status</th>
@@ -47,7 +46,6 @@
                     </tr>
                     <c:forEach items="${requestScope.userTransactionsHistory}" var="transactionHistory">
                         <tr>
-                            <td>${transactionHistory.id}</td>
                             <td>${transactionHistory.accountNrFrom}</td>
                             <td>${transactionHistory.transactionType}</td>
                             <td>${transactionHistory.paymentAmount}</td>

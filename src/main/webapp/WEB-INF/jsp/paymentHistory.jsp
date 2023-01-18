@@ -37,7 +37,6 @@
                 <!-- Payment History Table -->
                 <table class="table text-center table-striped">
                     <tr>
-                        <th>Record Number</th>
                         <th>Beneficiary</th>
                         <th>Beneficiary Account Number</th>
                         <th>Account Number From</th>
@@ -50,7 +49,6 @@
                     <!-- Loop Through Payment History Records -->
                     <c:forEach items="${requestScope.userPaymentsHistory}" var="payments">
                         <tr>
-                            <td>${payments.id}</td>
                             <td>${payments.beneficiary}</td>
                             <td>${payments.beneficiaryAccountNr}</td>
                             <td>${payments.accountNrFrom}</td>
