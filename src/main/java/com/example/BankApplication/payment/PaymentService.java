@@ -5,6 +5,8 @@ import com.example.BankApplication.account.AccountService;
 import com.example.BankApplication.appuser.AppUser;
 import com.example.BankApplication.appuser.AppUserResource;
 import com.example.BankApplication.appuser.AppUserService;
+import com.example.BankApplication.transactionHistory.TransactionHistory;
+import com.example.BankApplication.transactionHistory.TransactionHistoryRepository;
 import com.sun.source.tree.PackageTree;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.web.servlet.ServletComponentScan;
@@ -23,6 +25,7 @@ public class PaymentService {
     private final AppUserService appUserService;
     private final AccountService accountService;
     private  final AppUserResource appUserResource;
+    private final TransactionHistoryRepository transactionHistoryRepository;
     public void savePayment(Payment payment){paymentRepository.save(payment);}
     public RedirectView payment(PaymentRequest request) throws AccountNotFoundException {
 //        AppUser appUser = appUserService.getCUrrentUser();
@@ -33,8 +36,20 @@ public class PaymentService {
         if (accountService.getByNr(request.getAccountNrFrom()).isEmpty())
             throw new IllegalStateException("No such account nr!");
 
-        if (accountService.getByNr(request.getBeneficiaryAccountNr()).isEmpty())
+        if (accountService.getByNr(request.getBeneficiaryAccountNr()).isEmpty()) {
+            TransactionHistory transactionHistory = new TransactionHistory(
+                    appUser,
+                    request.getAccountNrFrom(),
+                    "Payment",
+                    Double.parseDouble(request.getPaymentAmount()),
+                    "failed",
+                    "Beneficiary account not found",
+                    LocalDateTime.now()
+            );
+            transactionHistoryRepository.save(transactionHistory);
+
             throw new IllegalStateException("No such account nr!");
+        }
 
         Account accountFrom = accountService.findAccountByNr(request.getAccountNrFrom());
         Account accountBeneficiary = accountService.findAccountByNr(request.getBeneficiaryAccountNr());
@@ -42,6 +57,17 @@ public class PaymentService {
         double money = Double.parseDouble((request.getPaymentAmount()));
 
         if (accountFrom.getBalance().compareTo(BigDecimal.valueOf(money)) < 0){
+            TransactionHistory transactionHistory = new TransactionHistory(
+                    appUser,
+                    request.getAccountNrFrom(),
+                    "Payment",
+                    Double.parseDouble(request.getPaymentAmount()),
+                    "failed",
+                    "not enough funds",
+                    LocalDateTime.now()
+            );
+            transactionHistoryRepository.save(transactionHistory);
+
             throw new IllegalStateException("Not enough money in account!");
         }
 
@@ -61,6 +87,17 @@ public class PaymentService {
         accountService.saveAccount(accountFrom);
         accountService.saveAccount(accountBeneficiary);
         savePayment(payment);
+
+        TransactionHistory transactionHistory = new TransactionHistory(
+                appUser,
+                request.getAccountNrFrom(),
+                "Payment",
+                Double.parseDouble(request.getPaymentAmount()),
+                "success",
+                "Payment Successful",
+                LocalDateTime.now()
+        );
+        transactionHistoryRepository.save(transactionHistory);
 
         return new RedirectView("/dashboard");
     }

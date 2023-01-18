@@ -1,3 +1,7 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +13,7 @@
     <style>
         body{
             height: 100vh;
-            background-image: url("../images/main_bg.png");
+            background-image: url("../images/img_2.png");
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
@@ -24,22 +28,38 @@
     <title>Errors</title>
 </head>
 <body class="d-flex align-items-center justify-content-center">
-<div class="card col-4 alert alert-danger border border-danger text-danger">
-    <h3 class="card-title">
-        <i class="fa fa-window-close me-2"></i>Errors:
-    </h3>
-    <hr>
-    <div class="card-body">
-        <p class="card-text">
-            hwgfvwegdvghewvghewvghevwghvewgh
-            jsjcnaskckckskcnsdknkcnkasndkwksnjv sdn jendklqewwdlmewkjcnkjnkwje
-        </p>
-        <hr>
-        <a href="/login" class="btn btn-sm btn-danger">
-            <i class="fa fa-arrow-alt-circle-left me-1"></i> Back
-        </a>
-    </div>
-</div>
 
+    <!-- Card: Error Card -->
+    <div class="card col-4 alert alert-danger border border-danger text-danger">
+        <!-- Card Title -->
+        <h3 class="card-title">
+            <i class="fa fa-window-close me-2"></i>Errors:
+        </h3>
+        <!-- End Of Card Title -->
+        <hr>
+        <!-- Card Body -->
+        <div class="card-body">
+            <!-- Card Text -->
+            <p class="card-text">
+                <!-- Display Message -->
+<%--                <c:if test="${error != null}">--%>
+<%--                <div class="alert alert-danger text-center border border-danger">--%>
+<%--                    <b>${error}</b>--%>
+<%--                </div>--%>
+<%--                </c:if>--%>
+                Not enough money / Bad account. Please try again...
+            <!-- End Of Display Message -->
+            </p>
+            <!-- End Of Card Text -->
+            <hr>
+            <!-- Back To Login Page -->
+            <a href="/dashboard" class="btn btn-sm btn-danger">
+                <i class="fa fa-arrow-alt-circle-left me-1"></i> Back
+            </a>
+            <!-- End Of Back To Login Page -->
+        </div>
+        <!-- End Of Card Body -->
+    </div>
+    <!-- End Of Card: Error Card -->
 </body>
 </html>

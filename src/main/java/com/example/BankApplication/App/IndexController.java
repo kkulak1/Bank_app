@@ -71,6 +71,7 @@ public class IndexController {
         ModelAndView getErrorPage = new ModelAndView("error");
         System.out.println("In Error Page Controller");
         getErrorPage.addObject("PageTitle", "Error");
+//        getErrorPage.addObject("error","Not enough money / Bad account. Please try again");
         return getErrorPage;
     }
 

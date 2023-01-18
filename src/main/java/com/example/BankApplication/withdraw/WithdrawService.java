@@ -6,6 +6,8 @@ import com.example.BankApplication.appuser.AppUser;
 import com.example.BankApplication.appuser.AppUserResource;
 import com.example.BankApplication.appuser.AppUserService;
 
+import com.example.BankApplication.transactionHistory.TransactionHistory;
+import com.example.BankApplication.transactionHistory.TransactionHistoryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
@@ -23,6 +25,7 @@ public class WithdrawService {
     private final AppUserService appUserService;
     private final AccountService accountService;
     private final AppUserResource appUserResource;
+    private final TransactionHistoryRepository transactionHistoryRepository;
     public void saveWithdraw(Withdraw withdraw){
         withdrawRepository.save(withdraw);
     }
@@ -44,8 +47,21 @@ public class WithdrawService {
 
         double money = Double.parseDouble(request.getAmountOfMoney());
 
-        if (accountFrom.getBalance().compareTo(BigDecimal.valueOf(money)) < 0)
+        if (accountFrom.getBalance().compareTo(BigDecimal.valueOf(money)) < 0) {
+            TransactionHistory transactionHistory = new TransactionHistory(
+                    appUser,
+                    request.getAccountNR(),
+                    "Withdraw",
+                    Double.parseDouble(request.getAmountOfMoney()),
+                    "failed",
+                    "not enough funds",
+                    LocalDateTime.now()
+            );
+            transactionHistoryRepository.save(transactionHistory);
+
             throw new IllegalStateException("Not enough money in account!");
+        }
+
 
         Withdraw withdraw = new Withdraw(
                 LocalDateTime.now(),
@@ -59,6 +75,17 @@ public class WithdrawService {
         accountService.saveAccount(accountFrom);
 
         saveWithdraw(withdraw);
+
+        TransactionHistory transactionHistory = new TransactionHistory(
+                appUser,
+                request.getAccountNR(),
+                "Withdraw",
+                Double.parseDouble(request.getAmountOfMoney()),
+                "success",
+                "Withdraw Successful",
+                LocalDateTime.now()
+        );
+        transactionHistoryRepository.save(transactionHistory);
 
         return new RedirectView("/dashboard");
     }
