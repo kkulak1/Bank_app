@@ -90,9 +90,18 @@ public class IndexController {
 
         getDashboardPage.addObject("userAccounts", accounts);
 
-        BigDecimal totalAccountsBalance = accountRepository.getTotalBalance(appUser);
+        BigDecimal totalAccountsBalance;
+
+        if (accounts.size() != 0) {
+
+            totalAccountsBalance = accountRepository.getTotalBalance(appUser);
+        }
+        else{
+            totalAccountsBalance = BigDecimal.valueOf(0);
+        }
         totalAccountsBalance = totalAccountsBalance.setScale(2, RoundingMode.DOWN);
         getDashboardPage.addObject("totalBalance", totalAccountsBalance);
+
 
         getDashboardPage.addObject("appUser", appUser);
 
