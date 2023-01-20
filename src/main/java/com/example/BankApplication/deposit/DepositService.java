@@ -67,7 +67,7 @@ public class DepositService {
                 "Deposit",
                 Double.parseDouble(request.getAmountOfMoney()),
                 "success",
-                "Deposit Successful",
+                "deposit successful",
                 LocalDateTime.now()
         );
         transactionHistoryRepository.save(transactionHistory);

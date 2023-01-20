@@ -106,7 +106,7 @@ public class TransferService {
                 "Transfer",
                 Double.parseDouble(request.getAmountOfMoney()),
                 "success",
-                "Transfer Successful",
+                "transfer successful",
                 LocalDateTime.now()
         );
         transactionHistoryRepository.save(transactionHistory);

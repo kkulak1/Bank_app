@@ -3,7 +3,11 @@
 }
 
 body{
-    background-color: rgb(188, 187, 187);
+    background-color: rgb(187, 187, 187);
+    background-image: url("../images/dash.png");
+    background-size: cover;
+    /*background-position: center center;*/
+    background-repeat: no-repeat;
 }
 .container
 .main-page-header{

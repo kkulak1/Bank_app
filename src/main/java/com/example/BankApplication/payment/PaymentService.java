@@ -43,7 +43,7 @@ public class PaymentService {
                     "Payment",
                     Double.parseDouble(request.getPaymentAmount()),
                     "failed",
-                    "Beneficiary account not found",
+                    "beneficiary account not found",
                     LocalDateTime.now()
             );
             transactionHistoryRepository.save(transactionHistory);
@@ -94,7 +94,7 @@ public class PaymentService {
                 "Payment",
                 Double.parseDouble(request.getPaymentAmount()),
                 "success",
-                "Payment Successful",
+                "payment successful",
                 LocalDateTime.now()
         );
         transactionHistoryRepository.save(transactionHistory);

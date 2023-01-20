@@ -82,7 +82,7 @@ public class WithdrawService {
                 "Withdraw",
                 Double.parseDouble(request.getAmountOfMoney()),
                 "success",
-                "Withdraw Successful",
+                "withdraw successful",
                 LocalDateTime.now()
         );
         transactionHistoryRepository.save(transactionHistory);
