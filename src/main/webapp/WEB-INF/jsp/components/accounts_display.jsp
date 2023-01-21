@@ -16,12 +16,12 @@
 </div>
 <!--Container total accounts balance display-->
 <div class="container d-flex py-3">
-    <h2 class="me-auto">Total accounts balance:</h2>
-    <h2 class="ms-auto">
+    <h3 class="me-auto"><font color="#D1C5C5">Total accounts balance:</font></h3>
+    <h3 class="ms-auto"><font color="#D1C5C5">
         <c:if test="${requestScope.totalBalance != null}">
-            <c:out value="${totalBalance}"/>
+            <c:out value="${totalBalance} PLN"/>
         </c:if>
-    </h2>
+    </h3>
 </div>
 
 <!--Container: Accordion menu / Drop Down  -->
@@ -45,7 +45,7 @@
                                 <li class="list-group-item d-flex">Account Name <span class="ms-auto"><b>${account.name}</b></span></li>
                                 <li class="list-group-item d-flex">Account Number <span class="ms-auto"><b>${account.nr}</b></span></li>
                                 <li class="list-group-item d-flex">Account Type <span class="ms-auto"><b>${account.type}</b></span></li>
-                                <li class="list-group-item d-flex">Account Balance <span class="ms-auto"><b>${account.balance}</b></span></li>
+                                <li class="list-group-item d-flex">Account Balance <span class="ms-auto"><b>${account.balance} PLN</b></span></li>
                             </ul>
                             <!-- Account Details List -->
                         </div>

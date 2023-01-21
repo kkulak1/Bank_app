@@ -58,7 +58,7 @@
 
                 <div class="form-group mb-2">
                     <label for="">Enter Payment Amount</label>
-                    <input type="text" name="paymentAmount" class="form-control" placeholder="Enter payment amount">
+                    <input type="text" name="paymentAmount" class="form-control" placeholder="Enter payment amount [PLN]">
                 </div>
 
                 <div class="form-group mb-2">
@@ -103,7 +103,7 @@
 
                 <div class="form-group mb-2">
                     <label for="">Enter transfer amount</label>
-                    <input type="text" name="amountOfMoney" class="form-control" placeholder="Enter transfer amount">
+                    <input type="text" name="amountOfMoney" class="form-control" placeholder="Enter transfer amount [PLN]">
                 </div>
 
                 <div class="form-group mb-2">
@@ -127,7 +127,7 @@
 
                     <div class="form-group mb-2">
                         <label for="">Enter deposit amount</label>
-                        <input type="text" name="amountOfMoney" class="form-control" placeholder="Enter deposit amount">
+                        <input type="text" name="amountOfMoney" class="form-control" placeholder="Enter deposit amount [PLN]">
                     </div>
 
 
@@ -161,7 +161,7 @@
 
                     <div class="form-group mb-2">
                         <label for="">Enter withdrawal amount</label>
-                        <input type="text" name="amountOfMoney" class="form-control" placeholder="Enter withdrawal amount">
+                        <input type="text" name="amountOfMoney" class="form-control" placeholder="Enter withdrawal amount [PLN]">
                     </div>
 
 

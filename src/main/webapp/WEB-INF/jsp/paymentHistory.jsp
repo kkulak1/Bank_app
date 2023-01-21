@@ -52,7 +52,7 @@
                             <td>${payments.beneficiary}</td>
                             <td>${payments.beneficiaryAccountNr}</td>
                             <td>${payments.accountNrFrom}</td>
-                            <td>${payments.paymentAmount}</td>
+                            <td>${payments.paymentAmount} PLN</td>
 <%--                            <td>${payments.status}</td>--%>
                             <td>${payments.reference}</td>
 <%--                            <td>${payments.reason_code}</td>--%>

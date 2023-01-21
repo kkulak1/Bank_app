@@ -48,7 +48,7 @@
                         <tr>
                             <td>${transactionHistory.accountNrFrom}</td>
                             <td>${transactionHistory.transactionType}</td>
-                            <td>${transactionHistory.paymentAmount}</td>
+                            <td>${transactionHistory.paymentAmount} PLN</td>
                             <td>${transactionHistory.status}</td>
                             <td>${transactionHistory.reasonCode}</td>
                             <td>${transactionHistory.currentTransactionDate}</td>

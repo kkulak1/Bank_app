@@ -4,7 +4,7 @@
 
 body{
     background-color: rgb(187, 187, 187);
-    background-image: url("../images/dash.png");
+    background-image: url("../images/kaczor.jpg");
     background-size: cover;
     /*background-position: center center;*/
     background-repeat: no-repeat;
@@ -78,4 +78,18 @@ body{
 
 .withdraw-card{
     display: none;
+}
+
+h3 {
+    /* color: white; */
+    font-size: 30px;
+    text-shadow:
+            0.05em 0 black,
+            0 0.05em black,
+            -0.05em 0 black,
+            0 -0.05em black,
+            -0.05em -0.05em black,
+            -0.05em 0.05em black,
+            0.05em -0.05em black,
+            0.05em 0.05em black;
 }
