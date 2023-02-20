@@ -1,6 +1,5 @@
 package com.example.BankApplication.account;
 
-import com.example.BankApplication.Storage.UserStorage;
 import com.example.BankApplication.appuser.AppUser;
 import com.example.BankApplication.appuser.AppUserResource;
 import com.example.BankApplication.appuser.AppUserService;

@@ -17,5 +17,4 @@ public interface TransactionHistoryRepository extends JpaRepository<TransactionH
 
     @Query(value = "SELECT a from TransactionHistory a where a.appUserFrom = :appUser")
     List<TransactionHistory> findAllTransactions(AppUser appUser);
-
 }

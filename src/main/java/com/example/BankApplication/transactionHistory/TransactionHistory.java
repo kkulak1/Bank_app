@@ -45,13 +45,13 @@ public class TransactionHistory {
     @Column(nullable = false)
     private LocalDateTime currentTransactionDate;
 
-    public TransactionHistory(AppUser appUser, Long accountNrFrom, String transactionType, Double paymentAmount, String status, String reasonCode, LocalDateTime date) {
+    public TransactionHistory(AppUser appUser, Long accountNrFrom, String transactionType, Double paymentAmount, LocalDateTime date) {
         this.appUserFrom = appUser;
         this.accountNrFrom = accountNrFrom;
         this.transactionType = transactionType;
         this.paymentAmount = paymentAmount;
-        this.status = status;
-        this.reasonCode = reasonCode;
+        this.status = "status";
+        this.reasonCode = "reasonCode";
         this.currentTransactionDate = date;
     }
 }

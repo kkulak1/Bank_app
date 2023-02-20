@@ -2,7 +2,6 @@ package com.example.BankApplication.appuser;
 
 
 import com.auth0.jwt.HeaderParams;
-import com.example.BankApplication.Storage.UserStorage;
 import com.example.BankApplication.security.models.AuthenticationRequest;
 import com.example.BankApplication.security.models.AuthenticationResponse;
 import com.example.BankApplication.security.util.JwtUtil;
@@ -32,14 +31,9 @@ import java.util.List;
 //@RequestMapping("/user")
 public class AppUserResource {
     private final AppUserService appUserService;
-
-//    @Autowired
     private final JwtUtil jwtTokenUtil;
-//    @Autowired
     private final AuthenticationManager authenticationManager;
-
-//    private UserStorage userStorage;
-    public static String CURRENTUSER;
+    public static String name;
 
     public AppUserResource(AppUserService appUserService, JwtUtil jwtTokenUtil, AuthenticationManager authenticationManager) {
         this.appUserService = appUserService;
@@ -73,8 +67,6 @@ public class AppUserResource {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)      // changed from authenticate to login
     public RedirectView createAuthenticationToken(AuthenticationRequest authenticationRequest, HttpSession session) throws Exception {
-
-        CURRENTUSER = authenticationRequest.getUsername();      //Stinky cheese
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
@@ -94,6 +86,6 @@ public class AppUserResource {
     }
 
     public String getUsername(){
-        return CURRENTUSER;
+        return name;
     }
 }

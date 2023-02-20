@@ -8,6 +8,7 @@ import com.example.BankApplication.appuser.AppUserService;
 
 import com.example.BankApplication.transactionHistory.TransactionHistory;
 import com.example.BankApplication.transactionHistory.TransactionHistoryRepository;
+import com.example.BankApplication.transactionHistory.TransactionHistoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
@@ -25,7 +26,7 @@ public class DepositService {
     private final AppUserService appUserService;
     private final AccountService accountService;
     private final AppUserResource appUserResource;
-    private final TransactionHistoryRepository transactionHistoryRepository;
+    private final TransactionHistoryService transactionHistoryService;
     public void saveDeposit(Deposit deposit){
         depositRepository.save(deposit);
     }
@@ -51,7 +52,6 @@ public class DepositService {
                 Double.parseDouble(request.getAmountOfMoney())
         );
 
-
         BigDecimal currentBalance = accountFrom.getBalance();
         BigDecimal money = BigDecimal.valueOf(deposit.getAmountOfMoney());
 
@@ -66,11 +66,10 @@ public class DepositService {
                 request.getAccountNR(),
                 "Deposit",
                 Double.parseDouble(request.getAmountOfMoney()),
-                "success",
-                "deposit successful",
                 LocalDateTime.now()
         );
-        transactionHistoryRepository.save(transactionHistory);
+        transactionHistoryService.setTransactionStatusAndType(transactionHistory, true, "deposit successful");
+
 
         return new RedirectView("/dashboard");
     }
