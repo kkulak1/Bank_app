@@ -8,6 +8,7 @@ import com.example.BankApplication.appuser.AppUserService;
 
 import com.example.BankApplication.transactionHistory.TransactionHistory;
 import com.example.BankApplication.transactionHistory.TransactionHistoryRepository;
+import com.example.BankApplication.transactionHistory.TransactionHistoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
@@ -25,7 +26,7 @@ public class WithdrawService {
     private final AppUserService appUserService;
     private final AccountService accountService;
     private final AppUserResource appUserResource;
-    private final TransactionHistoryRepository transactionHistoryRepository;
+    private final TransactionHistoryService transactionHistoryService;
     public void saveWithdraw(Withdraw withdraw){
         withdrawRepository.save(withdraw);
     }
@@ -34,34 +35,29 @@ public class WithdrawService {
         return withdrawRepository.findById(withdraw.getId());
     }
     public RedirectView withdraw(WithdrawRequest request) throws AccountNotFoundException {
-
 //        AppUser appUser = appUserService.getCUrrentUser();
-
         String email = appUserResource.getUsername();
         AppUser appUser = appUserService.findAppUserByUsername(email);
 
         if (accountService.getByNr(request.getAccountNR()).isEmpty())
             throw new IllegalStateException("No such account nr!");
 
+        TransactionHistory transactionHistory = new TransactionHistory(
+                appUser,
+                request.getAccountNR(),
+                "Withdraw",
+                Double.parseDouble(request.getAmountOfMoney()),
+                LocalDateTime.now()
+        );
+
         Account accountFrom = accountService.findAccountByNr(request.getAccountNR());
 
         double money = Double.parseDouble(request.getAmountOfMoney());
 
         if (accountFrom.getBalance().compareTo(BigDecimal.valueOf(money)) < 0) {
-            TransactionHistory transactionHistory = new TransactionHistory(
-                    appUser,
-                    request.getAccountNR(),
-                    "Withdraw",
-                    Double.parseDouble(request.getAmountOfMoney()),
-                    "failed",
-                    "not enough funds",
-                    LocalDateTime.now()
-            );
-            transactionHistoryRepository.save(transactionHistory);
-
+            transactionHistoryService.setTransactionStatusAndType(transactionHistory, false, "not enough funds");
             throw new IllegalStateException("Not enough money in account!");
         }
-
 
         Withdraw withdraw = new Withdraw(
                 LocalDateTime.now(),
@@ -75,17 +71,7 @@ public class WithdrawService {
         accountService.saveAccount(accountFrom);
 
         saveWithdraw(withdraw);
-
-        TransactionHistory transactionHistory = new TransactionHistory(
-                appUser,
-                request.getAccountNR(),
-                "Withdraw",
-                Double.parseDouble(request.getAmountOfMoney()),
-                "success",
-                "withdraw successful",
-                LocalDateTime.now()
-        );
-        transactionHistoryRepository.save(transactionHistory);
+        transactionHistoryService.setTransactionStatusAndType(transactionHistory, true, "withdraw successful");
 
         return new RedirectView("/dashboard");
     }

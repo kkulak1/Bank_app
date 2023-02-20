@@ -8,6 +8,7 @@ import com.example.BankApplication.appuser.AppUserResource;
 import com.example.BankApplication.appuser.AppUserService;
 import com.example.BankApplication.transactionHistory.TransactionHistory;
 import com.example.BankApplication.transactionHistory.TransactionHistoryRepository;
+import com.example.BankApplication.transactionHistory.TransactionHistoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class TransferService {
     private final AppUserService appUserService;
     private final AccountService accountService;
     private final AppUserResource appUserResource;
-    private final TransactionHistoryRepository transactionHistoryRepository;
+    private final TransactionHistoryService transactionHistoryService;
     public void saveTransfer(Transfer transfer){
         transferRepository.save(transfer);
     }
@@ -39,9 +40,16 @@ public class TransferService {
     }
     public RedirectView transfer(TransferRequest request) throws AccountNotFoundException {
 //        AppUser appUser = appUserService.getCUrrentUser();
-
         String email = appUserResource.getUsername();
         AppUser appUser = appUserService.findAppUserByUsername(email);
+
+        TransactionHistory transactionHistory = new TransactionHistory(
+                appUser,
+                request.getAccountNrFrom(),
+                "Transfer",
+                Double.parseDouble(request.getAmountOfMoney()),
+                LocalDateTime.now()
+        );
 
         if (accountService.getByNr(request.getAccountNrTo()).isEmpty())
             throw new IllegalStateException("No such account nr!");
@@ -54,37 +62,15 @@ public class TransferService {
 
         double money = Double.parseDouble((request.getAmountOfMoney()));
 
-
         if (Objects.equals(accountFrom.getId(), accountTo.getId())) {
-            TransactionHistory transactionHistory = new TransactionHistory(
-                    appUser,
-                    request.getAccountNrFrom(),
-                    "Transfer",
-                    Double.parseDouble(request.getAmountOfMoney()),
-                    "failed",
-                    "transfer between one account",
-                    LocalDateTime.now()
-            );
-            transactionHistoryRepository.save(transactionHistory);
-
+            transactionHistoryService.setTransactionStatusAndType(transactionHistory, false, "transfer between one account");
             throw new IllegalStateException("Cannot transfer to the same account!");
         }
 
         if (accountFrom.getBalance().compareTo(BigDecimal.valueOf(money)) < 0){
-            TransactionHistory transactionHistory = new TransactionHistory(
-                    appUser,
-                    request.getAccountNrFrom(),
-                    "Transfer",
-                    Double.parseDouble(request.getAmountOfMoney()),
-                    "failed",
-                    "not enough funds",
-                    LocalDateTime.now()
-            );
-            transactionHistoryRepository.save(transactionHistory);
-
+            transactionHistoryService.setTransactionStatusAndType(transactionHistory, false, "not enough funds");
             throw new IllegalStateException("Not enough money!");
         }
-
 
         Transfer transfer = new Transfer(
                 LocalDateTime.now(),
@@ -100,16 +86,7 @@ public class TransferService {
         accountService.saveAccount(accountTo);
         saveTransfer(transfer);
 
-        TransactionHistory transactionHistory = new TransactionHistory(
-                appUser,
-                request.getAccountNrFrom(),
-                "Transfer",
-                Double.parseDouble(request.getAmountOfMoney()),
-                "success",
-                "transfer successful",
-                LocalDateTime.now()
-        );
-        transactionHistoryRepository.save(transactionHistory);
+        transactionHistoryService.setTransactionStatusAndType(transactionHistory, true, "transfer successful");
 
         return new RedirectView("/dashboard");
     }

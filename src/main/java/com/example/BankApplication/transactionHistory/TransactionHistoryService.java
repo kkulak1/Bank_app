@@ -28,11 +28,11 @@ public class TransactionHistoryService {
 
     public void setTransactionStatusAndType(TransactionHistory transactionHistory, boolean status, String type){
         if (status){
-            transactionHistory.setStatus("successful");}
+            transactionHistory.setStatus("success");}
         else {
             transactionHistory.setStatus("failed");
         }
-        transactionHistory.setTransactionType(type);
+        transactionHistory.setReasonCode(type);
         transactionHistoryRepository.save(transactionHistory);
     }
 
