@@ -6,29 +6,18 @@ import com.example.BankApplication.account.AccountService;
 import com.example.BankApplication.appuser.AppUser;
 import com.example.BankApplication.appuser.AppUserResource;
 import com.example.BankApplication.appuser.AppUserService;
-import com.example.BankApplication.deposit.Deposit;
-import com.example.BankApplication.deposit.DepositService;
 import com.example.BankApplication.payment.Payment;
 import com.example.BankApplication.payment.PaymentService;
 import com.example.BankApplication.transactionHistory.TransactionHistory;
 import com.example.BankApplication.transactionHistory.TransactionHistoryRepository;
-import com.example.BankApplication.transfer.Transfer;
-import com.example.BankApplication.transfer.TransferService;
-import com.example.BankApplication.withdraw.Withdraw;
-import com.example.BankApplication.withdraw.WithdrawService;
 import lombok.AllArgsConstructor;
-import net.bytebuddy.TypeCache;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.security.auth.login.AccountNotFoundException;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.List;
 
@@ -39,9 +28,6 @@ public class IndexController {
     private final AppUserResource appUserResource;
     private final AccountService accountService;
     private final PaymentService paymentService;
-    private final TransferService transferService;
-    private final WithdrawService withdrawService;
-    private final DepositService depositService;
     private final AccountRepository accountRepository;
     private final TransactionHistoryRepository transactionHistoryRepository;
 

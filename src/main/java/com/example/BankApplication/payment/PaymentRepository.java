@@ -1,7 +1,6 @@
 package com.example.BankApplication.payment;
 
 import com.example.BankApplication.appuser.AppUser;
-import com.example.BankApplication.transfer.Transfer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

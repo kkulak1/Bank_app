@@ -18,8 +18,6 @@ import java.util.Collections;
 @NoArgsConstructor
 @Entity
 public class AppUser implements UserDetails {
-
-
     @SequenceGenerator(
             name = "student_sequence",
             sequenceName = "student_sequence",

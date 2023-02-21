@@ -17,7 +17,6 @@ public class AppConfig extends WebMvcConfigurationSupport {
         registry.addResourceHandler("css/**", "images/**", "js/**")
                 .addResourceLocations("classpath:/static/css/", "classpath:/static/images/", "classpath:/static/js/");
     }
-
     @Bean
     public InternalResourceViewResolver viewResolver(){
         InternalResourceViewResolver jspViewResolver = new InternalResourceViewResolver();

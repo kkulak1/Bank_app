@@ -6,11 +6,8 @@ import com.example.BankApplication.appuser.AppUser;
 import com.example.BankApplication.appuser.AppUserResource;
 import com.example.BankApplication.appuser.AppUserService;
 import com.example.BankApplication.transactionHistory.TransactionHistory;
-import com.example.BankApplication.transactionHistory.TransactionHistoryRepository;
 import com.example.BankApplication.transactionHistory.TransactionHistoryService;
-import com.sun.source.tree.PackageTree;
 import lombok.AllArgsConstructor;
-import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 

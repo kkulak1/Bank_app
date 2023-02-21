@@ -1,13 +1,8 @@
 package com.example.BankApplication.appuser;
 
 
-import com.auth0.jwt.HeaderParams;
 import com.example.BankApplication.security.models.AuthenticationRequest;
-import com.example.BankApplication.security.models.AuthenticationResponse;
 import com.example.BankApplication.security.util.JwtUtil;
-import lombok.AllArgsConstructor;
-import lombok.extern.java.Log;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,18 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.http.HttpClient;
-import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.List;
 
 @RestController
-//@AllArgsConstructor
-//@RequestMapping("/user")
 public class AppUserResource {
     private final AppUserService appUserService;
     private final JwtUtil jwtTokenUtil;
