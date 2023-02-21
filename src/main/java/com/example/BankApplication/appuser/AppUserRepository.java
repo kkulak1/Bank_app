@@ -20,4 +20,7 @@ public interface AppUserRepository extends JpaRepository<AppUser, Long> {
     @Query("UPDATE AppUser a " +
             "SET a.enabled = TRUE WHERE a.email = :email")
     int enableAppUser(@Param("email") String email);
+
+    @Query("select count(*) from AppUser a where a.email= :email")
+    int selectExistsEmail(@Param("email") String email);
 }
