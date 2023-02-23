@@ -40,7 +40,10 @@ public class DepositService {
         String email = appUserResource.getUsername();
         AppUser appUser = appUserService.findAppUserByUsername(email);
 
-        if (accountService.getByNr(request.getAccountNR()).isEmpty())
+        boolean accountNrExists = accountService.getByNr(request.getAccountNR())
+                .isPresent();
+        
+        if (!accountNrExists)
             throw new IllegalStateException("No such account nr!");
 
         Account accountFrom = accountService.findAccountByNr(request.getAccountNR());
