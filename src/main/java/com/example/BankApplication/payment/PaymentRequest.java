@@ -1,11 +1,6 @@
 package com.example.BankApplication.payment;
 
-import com.example.BankApplication.account.Account;
 import lombok.*;
-
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Getter
 @Setter

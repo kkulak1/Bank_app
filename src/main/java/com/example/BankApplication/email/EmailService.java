@@ -3,8 +3,6 @@ package com.example.BankApplication.email;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -15,8 +13,7 @@ import javax.mail.internet.MimeMessage;
 
 @Service
 @AllArgsConstructor
-//@EntityScan(basePackages = {"com.example.BankApplication.registration"})
-public class EmailService implements EmailSender{
+public class EmailService implements EmailSender {
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
 
     private final JavaMailSender mailSender;

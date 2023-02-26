@@ -26,12 +26,13 @@ public class Deposit {
             generator = "deposit_sequence"
     )
     private Long id;
+
     @Column(nullable = false)
     private LocalDateTime currentDepositDate;
 
-    //    tutaj nie jestem pewien czy many:1
     @Column(nullable = false)
     private Long accountNR;
+
     @Column(nullable = false)
     private Double amountOfMoney;
 

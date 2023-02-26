@@ -2,12 +2,9 @@ package com.example.BankApplication.registration;
 
 import lombok.*;
 
-//co chcemy przechwycic gdy wyslemy zapytanie-request
 @Getter
 @Setter
 @AllArgsConstructor
-//@RequiredArgsConstructor
-//@NoArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString

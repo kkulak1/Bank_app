@@ -32,7 +32,7 @@ public class IndexController {
     private final TransactionHistoryRepository transactionHistoryRepository;
 
     @GetMapping("/")
-    public ModelAndView getIndex(){
+    public ModelAndView getIndex() {
         ModelAndView getIndexPage = new ModelAndView("index");
         getIndexPage.addObject("PageTitle", "Home");
         System.out.println("In Index Page Controller");
@@ -40,7 +40,7 @@ public class IndexController {
     }
 
     @GetMapping("/login")
-    public ModelAndView getLogin(){
+    public ModelAndView getLogin() {
         ModelAndView getLoginPage = new ModelAndView("login");
         System.out.println("In Login Page Controller");
         getLoginPage.addObject("PageTitle", "Login");
@@ -48,7 +48,7 @@ public class IndexController {
     }
 
     @GetMapping("/register")
-    public ModelAndView getRegister(){
+    public ModelAndView getRegister() {
         ModelAndView getRegisterPage = new ModelAndView("register");
         System.out.println("In Register Page Controller");
         getRegisterPage.addObject("PageTitle", "Register");
@@ -56,7 +56,7 @@ public class IndexController {
     }
 
     @GetMapping("/error")
-    public ModelAndView getError(){
+    public ModelAndView getError() {
         ModelAndView getErrorPage = new ModelAndView("error");
         System.out.println("In Error Page Controller");
         getErrorPage.addObject("PageTitle", "Error");
@@ -125,7 +125,7 @@ public class IndexController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session, RedirectAttributes redirectAttributes){
+    public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
         session.invalidate();
         redirectAttributes.addFlashAttribute("logged_out", "Logged out successfully");
 

@@ -1,15 +1,9 @@
 package com.example.BankApplication.appuser;
 
-import com.example.BankApplication.account.AccountService;
 import com.example.BankApplication.registration.token.ConfirmationToken;
 import com.example.BankApplication.registration.token.ConfirmationTokenService;
 import com.example.BankApplication.security.util.JwtUtil;
-import com.example.BankApplication.transfer.TransferRequest;
-import com.example.BankApplication.transfer.TransferService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,11 +20,9 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class AppUserService implements UserDetailsService {
-
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
-//    private final TransferService transferService;
     private final static String USER_NOT_FOUND_MSG = "User with email %s not found!";
     private final JwtUtil jwtUtil;
 
@@ -68,9 +60,6 @@ public class AppUserService implements UserDetailsService {
                 .isPresent();
 
         if (userExists) {
-            // TODO check of attributes are the same and
-            // TODO if email not confirmed send confirmation email.
-
             throw new IllegalStateException("email already taken");
         }
 
@@ -100,7 +89,7 @@ public class AppUserService implements UserDetailsService {
         return appUserRepository.enableAppUser(email);
     }
 
-    public AppUser getCUrrentUser(){
+    public AppUser getCUrrentUser() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         String token = request.getHeader("Authorization").split(" ")[1];
         String username = jwtUtil.extractUsername(token);

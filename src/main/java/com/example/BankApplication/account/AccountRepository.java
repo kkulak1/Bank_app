@@ -14,6 +14,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findByNr(Long nr);
+
     Optional<Account> findByAppUser(AppUser appUser);
 
     Optional<Account> findByName(String name);

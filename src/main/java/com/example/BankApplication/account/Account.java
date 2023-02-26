@@ -4,7 +4,6 @@ import com.example.BankApplication.appuser.AppUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -26,15 +25,20 @@ public class Account {
             generator = "account_sequence"
     )
     private Long id;
+
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false)
     private String type;
 
+
     @Column(nullable = false)
     private Long nr;
+
     @Column(nullable = false)
     private BigDecimal balance;
+
     @OneToOne
     @JoinColumn(
             nullable = false,
@@ -42,7 +46,7 @@ public class Account {
     )
     private AppUser appUser;
 
-    public Account(AppUser appUser, BigDecimal balance,String name, String type) {
+    public Account(AppUser appUser, BigDecimal balance, String name, String type) {
         this.name = name;
         this.type = type;
         this.appUser = appUser;

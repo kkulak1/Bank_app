@@ -26,12 +26,13 @@ public class Withdraw {
             generator = "withdraw_sequence"
     )
     private Long id;
+
     @Column(nullable = false)
     private LocalDateTime currentWithdrawDate;
 
-    //    tutaj nie jestem pewien czy many:1
     @Column(nullable = false)
     private Long accountNR;
+
     @Column(nullable = false)
     private Double amountOfMoney;
 

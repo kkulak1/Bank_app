@@ -22,11 +22,14 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final AppUserService appUserService;
     private final AccountService accountService;
-    private  final AppUserResource appUserResource;
+    private final AppUserResource appUserResource;
     private final TransactionHistoryService transactionHistoryService;
-    public void savePayment(Payment payment){paymentRepository.save(payment);}
+
+    public void savePayment(Payment payment) {
+        paymentRepository.save(payment);
+    }
+
     public RedirectView payment(PaymentRequest request) throws AccountNotFoundException {
-//        AppUser appUser = appUserService.getCUrrentUser();
         String email = appUserResource.getUsername();
         AppUser appUser = appUserService.findAppUserByUsername(email);
 
@@ -51,7 +54,7 @@ public class PaymentService {
 
         double money = Double.parseDouble((request.getPaymentAmount()));
 
-        if (accountFrom.getBalance().compareTo(BigDecimal.valueOf(money)) < 0){
+        if (accountFrom.getBalance().compareTo(BigDecimal.valueOf(money)) < 0) {
             transactionHistoryService.setTransactionStatusAndType(transactionHistory, false, "not enough funds");
             throw new IllegalStateException("Not enough money in account!");
         }

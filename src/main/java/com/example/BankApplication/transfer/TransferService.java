@@ -1,4 +1,3 @@
-
 package com.example.BankApplication.transfer;
 
 import com.example.BankApplication.account.Account;
@@ -7,18 +6,14 @@ import com.example.BankApplication.appuser.AppUser;
 import com.example.BankApplication.appuser.AppUserResource;
 import com.example.BankApplication.appuser.AppUserService;
 import com.example.BankApplication.transactionHistory.TransactionHistory;
-import com.example.BankApplication.transactionHistory.TransactionHistoryRepository;
 import com.example.BankApplication.transactionHistory.TransactionHistoryService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.security.auth.login.AccountNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.AbstractCollection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -31,15 +26,16 @@ public class TransferService {
     private final AccountService accountService;
     private final AppUserResource appUserResource;
     private final TransactionHistoryService transactionHistoryService;
-    public void saveTransfer(Transfer transfer){
+
+    public void saveTransfer(Transfer transfer) {
         transferRepository.save(transfer);
     }
 
-    public Optional<Transfer> getTransfer(Transfer transfer){
+    public Optional<Transfer> getTransfer(Transfer transfer) {
         return transferRepository.findById(transfer.getId());
     }
+
     public RedirectView transfer(TransferRequest request) throws AccountNotFoundException {
-//        AppUser appUser = appUserService.getCUrrentUser();
         String email = appUserResource.getUsername();
         AppUser appUser = appUserService.findAppUserByUsername(email);
 
@@ -67,7 +63,7 @@ public class TransferService {
             throw new IllegalStateException("Cannot transfer to the same account!");
         }
 
-        if (accountFrom.getBalance().compareTo(BigDecimal.valueOf(money)) < 0){
+        if (accountFrom.getBalance().compareTo(BigDecimal.valueOf(money)) < 0) {
             transactionHistoryService.setTransactionStatusAndType(transactionHistory, false, "not enough funds");
             throw new IllegalStateException("Not enough money!");
         }

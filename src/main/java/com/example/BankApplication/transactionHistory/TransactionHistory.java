@@ -32,16 +32,22 @@ public class TransactionHistory {
             name = "app_user_id"
     )
     private AppUser appUserFrom;
+
     @Column(nullable = false)
     private Long accountNrFrom;
+
     @Column(nullable = false)
     private String transactionType;
+
     @Column(nullable = false)
     private Double paymentAmount;
+
     @Column(nullable = false)
     private String status;
+
     @Column(nullable = false)
     private String reasonCode;
+
     @Column(nullable = false)
     private LocalDateTime currentTransactionDate;
 

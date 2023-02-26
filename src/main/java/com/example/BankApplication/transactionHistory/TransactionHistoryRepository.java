@@ -12,7 +12,6 @@ import java.util.Optional;
 @Repository
 @Transactional(readOnly = true)
 public interface TransactionHistoryRepository extends JpaRepository<TransactionHistory, Long> {
-
     Optional<TransactionHistory> findById(Long id);
 
     @Query(value = "SELECT a from TransactionHistory a where a.appUserFrom = :appUser")

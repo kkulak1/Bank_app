@@ -18,7 +18,7 @@ public class PaymentController {
     }
 
     @GetMapping
-    public String paymentHistory(){
+    public String paymentHistory() {
         return paymentService.showPaymentHistory();
     }
 }

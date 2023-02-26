@@ -1,6 +1,5 @@
 package com.example.BankApplication.payment;
 
-import com.example.BankApplication.account.Account;
 import com.example.BankApplication.appuser.AppUser;
 import lombok.*;
 
@@ -24,21 +23,22 @@ public class Payment {
             generator = "payment_sequence"
     )
     private Long id;
+
     @Column(nullable = false)
     private String beneficiary;
+
     @Column(nullable = false)
     private Long beneficiaryAccountNr;
-//    @ManyToOne
-//    @JoinColumn(
-//            nullable = false,
-//            name = "account_id"
-//    )
+
     @Column(nullable = false)
     private Long accountNrFrom;
+
     @Column(nullable = false)
     private String reference;
+
     @Column(nullable = false)
     private Double paymentAmount;
+
     @ManyToOne
     @JoinColumn(
             nullable = false,

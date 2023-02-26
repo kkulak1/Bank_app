@@ -1,18 +1,19 @@
 package com.example.BankApplication.transfer;
 
 import com.example.BankApplication.appuser.AppUser;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-//@AllArgsConstructor
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity
-//@Table(name = "TRANSFERS")
 public class Transfer {
     @SequenceGenerator(
             name = "transfer_sequence",
@@ -25,12 +26,13 @@ public class Transfer {
             generator = "transfer_sequence"
     )
     private Long id;
+
     @Column(nullable = false)
     private LocalDateTime currentTransferDate;
 
-//    tutaj nie jestem pewien czy many:1
     @Column(nullable = false)
     private Long accountNR;
+
     @Column(nullable = false)
     private Double amountOfMoney;
 

@@ -5,9 +5,7 @@ import com.example.BankApplication.account.AccountService;
 import com.example.BankApplication.appuser.AppUser;
 import com.example.BankApplication.appuser.AppUserResource;
 import com.example.BankApplication.appuser.AppUserService;
-
 import com.example.BankApplication.transactionHistory.TransactionHistory;
-import com.example.BankApplication.transactionHistory.TransactionHistoryRepository;
 import com.example.BankApplication.transactionHistory.TransactionHistoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,15 +25,16 @@ public class WithdrawService {
     private final AccountService accountService;
     private final AppUserResource appUserResource;
     private final TransactionHistoryService transactionHistoryService;
-    public void saveWithdraw(Withdraw withdraw){
+
+    public void saveWithdraw(Withdraw withdraw) {
         withdrawRepository.save(withdraw);
     }
 
-    public Optional<Withdraw> getWithdraw(Withdraw withdraw){
+    public Optional<Withdraw> getWithdraw(Withdraw withdraw) {
         return withdrawRepository.findById(withdraw.getId());
     }
+
     public RedirectView withdraw(WithdrawRequest request) throws AccountNotFoundException {
-//        AppUser appUser = appUserService.getCUrrentUser();
         String email = appUserResource.getUsername();
         AppUser appUser = appUserService.findAppUserByUsername(email);
 

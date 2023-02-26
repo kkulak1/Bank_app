@@ -5,9 +5,7 @@ import com.example.BankApplication.account.AccountService;
 import com.example.BankApplication.appuser.AppUser;
 import com.example.BankApplication.appuser.AppUserResource;
 import com.example.BankApplication.appuser.AppUserService;
-
 import com.example.BankApplication.transactionHistory.TransactionHistory;
-import com.example.BankApplication.transactionHistory.TransactionHistoryRepository;
 import com.example.BankApplication.transactionHistory.TransactionHistoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,22 +25,22 @@ public class DepositService {
     private final AccountService accountService;
     private final AppUserResource appUserResource;
     private final TransactionHistoryService transactionHistoryService;
-    public void saveDeposit(Deposit deposit){
+
+    public void saveDeposit(Deposit deposit) {
         depositRepository.save(deposit);
     }
 
-    public Optional<Deposit> getDeposit(Deposit deposit){
+    public Optional<Deposit> getDeposit(Deposit deposit) {
         return depositRepository.findById(deposit.getId());
     }
-    public RedirectView deposit(DepositRequest request) throws AccountNotFoundException {
-//        AppUser appUser = appUserService.getCUrrentUser();
 
+    public RedirectView deposit(DepositRequest request) throws AccountNotFoundException {
         String email = appUserResource.getUsername();
         AppUser appUser = appUserService.findAppUserByUsername(email);
 
         boolean accountNrExists = accountService.getByNr(request.getAccountNR())
                 .isPresent();
-        
+
         if (!accountNrExists)
             throw new IllegalStateException("No such account nr!");
 
@@ -72,7 +70,6 @@ public class DepositService {
                 LocalDateTime.now()
         );
         transactionHistoryService.setTransactionStatusAndType(transactionHistory, true, "deposit successful");
-
 
         return new RedirectView("/dashboard");
     }

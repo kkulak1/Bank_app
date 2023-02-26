@@ -9,7 +9,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.*;
@@ -29,25 +28,25 @@ public class AppUserResource {
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<AppUser> getUserDetails (@PathVariable("username") String username) {
+    public ResponseEntity<AppUser> getUserDetails(@PathVariable("username") String username) {
         AppUser appUser = appUserService.findAppUserByUsername(username);
         return new ResponseEntity<>(appUser, HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<AppUser>> getAllAppUsers () {
+    public ResponseEntity<List<AppUser>> getAllAppUsers() {
         List<AppUser> appUsers = appUserService.findAllAppUsers();
         return new ResponseEntity<>(appUsers, HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<AppUser> updateAppUser (@RequestBody AppUser appUser) {
+    public ResponseEntity<AppUser> updateAppUser(@RequestBody AppUser appUser) {
         AppUser updateAppUser = appUserService.updateAppUser(appUser);
         return new ResponseEntity<>(updateAppUser, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteAppUser (@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteAppUser(@PathVariable("id") Long id) {
         appUserService.deleteAppUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -68,11 +67,10 @@ public class AppUserResource {
 
         final String jwt = jwtTokenUtil.generateToken(userDetails);
 
-//        return ResponseEntity.ok(new AuthenticationResponse(jwt));
         return new RedirectView("/dashboard");
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return name;
     }
 }
